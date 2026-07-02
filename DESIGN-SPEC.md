@@ -1,7 +1,7 @@
 # 心情怪兽收容所 · UI 设计规范
 
 > 面向 **Taro + React + TypeScript 微信小程序** 前端开发的执行规范。按本文即可施工。
-> 配套阅读:原始主题规范见 `stitch_ui/ethereal_whimsy/DESIGN.md`(本文不改它,只整合与落地);产品逻辑见 `prd/Mood Monster Shelter MVP 产品方案.md`;技术栈与强约束见根目录 `CLAUDE.md`。
+> 配套阅读:原始主题规范见 `ethereal_whimsy/DESIGN.md`(本文不改它,只整合与落地);产品逻辑见 `prd/Mood Monster Shelter MVP 产品方案.md`;技术栈与强约束见根目录 `CLAUDE.md`。
 >
 > 说明:文中保留为英文的均为**代码标识符**(云函数字段名、组件类名、CSS 变量名、字体产品名),开发时需原样对照使用,不做翻译。
 
