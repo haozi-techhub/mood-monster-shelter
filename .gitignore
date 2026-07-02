@@ -1,0 +1,42 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build output
+dist/
+build/
+.taro/
+.wechat/
+
+# Taro / 小程序产物
+*.zip
+
+# CloudBase 云开发本地配置
+cloudbaserc.local.json
+.cloudbase/
+
+# 日志
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# 环境变量与密钥(切勿提交)
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+
+# 编辑器 / 系统
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.swp
+Thumbs.db
+
+# Claude Code 本地配置(含个人权限设置,不进版本库)
+.claude/settings.local.json
