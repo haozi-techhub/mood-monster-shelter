@@ -302,5 +302,46 @@ body {
 .result-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-top: 16px; }
 .result-actions .full { grid-column: 1 / -1; }
 
+/* ===================== _1 设计系统展示元素 ===================== */
+.top-bar { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin-top: 2px; }
+.brand-title { font-family: var(--font-head); font-weight: 800; font-size: 24px; letter-spacing: -0.01em; line-height: 1.15; }
+.brand-title .grad { background: linear-gradient(120deg, var(--primary-container), var(--sky)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.brand-sub { font-size: 11px; color: var(--primary); margin-top: 4px; }
+.brand-sub .dot { color: var(--primary-container); margin: 0 5px; }
+.my-monster-btn { display: inline-flex; align-items: center; gap: 6px; background: #fff; border: 1px solid var(--outline-variant); border-radius: var(--r-pill); padding: 7px 12px; font-family: var(--font-head); font-weight: 700; font-size: 11.5px; color: var(--primary); box-shadow: var(--shadow-card); flex-shrink: 0; }
+.my-monster-btn .arr { color: var(--outline); font-size: 13px; }
+
+.bubble-l { position: relative; background: #fff; border: 1.5px solid var(--ink); border-radius: 14px; padding: 8px 12px; font-size: 12px; font-weight: 600; color: var(--on-surface); box-shadow: 3px 3px 0 var(--ink); display: inline-block; max-width: 168px; margin: 12px 0; }
+.bubble-l::after { content: ""; position: absolute; right: -9px; bottom: 12px; width: 12px; height: 12px; background: #fff; border-right: 1.5px solid var(--ink); border-bottom: 1.5px solid var(--ink); transform: rotate(-45deg); }
+.bubble-l .heart { color: var(--pink); margin-left: 4px; }
+
+.ds-section { margin-top: 20px; }
+.ds-title { font-family: var(--font-mono); font-size: 12px; font-weight: 700; letter-spacing: 0.06em; color: var(--on-surface); margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+.ds-title::before { content: "✦"; color: var(--star-deep); font-size: 13px; }
+
+.pal-row { display: flex; justify-content: space-between; gap: 4px; background: var(--surface-card); border: 1px solid var(--outline-variant); border-radius: var(--r-md); padding: 12px 8px; box-shadow: var(--shadow-card); }
+.pal-item { display: flex; flex-direction: column; align-items: center; gap: 5px; flex: 1; }
+.pal-swatch { width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.06); box-shadow: 0 4px 8px -4px rgba(0,0,0,0.15); }
+.pal-label { font-family: var(--font-mono); font-size: 8px; color: var(--on-surface-variant); text-align: center; line-height: 1.1; }
+
+.typo-card { background: var(--surface-card); border: 1px solid var(--outline-variant); border-radius: var(--r-md); padding: 14px; box-shadow: var(--shadow-card); display: flex; gap: 14px; align-items: center; position: relative; }
+.typo-left { flex-shrink: 0; }
+.typo-head { font-family: var(--font-head); font-weight: 800; font-size: 22px; color: var(--primary); line-height: 1; }
+.typo-sub { font-family: var(--font-body); font-size: 10.5px; color: var(--on-surface-variant); margin-top: 3px; }
+.typo-sample { font-family: var(--font-body); font-size: 10.5px; color: var(--on-surface-variant); line-height: 1.6; flex: 1; }
+
+.stamp-circle { width: 58px; height: 58px; border-radius: 50%; border: 2.5px dashed var(--primary); color: var(--primary); display: inline-flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-weight: 700; font-size: 9.5px; letter-spacing: 0.08em; transform: rotate(-12deg); background: rgba(255,255,255,0.5); flex-shrink: 0; text-align: center; line-height: 1.1; }
+
+.comp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-items: start; }
+.archive-mini { background: var(--surface-card); border: 1.5px solid var(--ink); border-radius: var(--r-md); padding: 14px; position: relative; box-shadow: var(--shadow-card); }
+.archive-mini .ar-head { display: flex; align-items: center; justify-content: space-between; }
+.archive-mini .ar-title { font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 0.08em; color: var(--on-surface-variant); }
+.archive-mini .ar-clock { font-size: 13px; }
+.archive-mini .ar-illu { display: flex; justify-content: center; margin: 2px 0; }
+.archive-mini .ar-illu .mascot { width: 86px; height: 96px; }
+.archive-mini .ar-stamp { position: absolute; bottom: 8px; right: 8px; }
+
+.deco { position: absolute; pointer-events: none; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.10)); }
+
 /* 响应式 */
 @media (max-width: 900px) { .showcase { padding: 36px 16px 60px; } .showcase-head h1 { font-size: 30px; } .phone { transform: scale(0.94); transform-origin: top center; } }
