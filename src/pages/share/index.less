@@ -1,0 +1,204 @@
+.share-page {
+  padding-right: 38px;
+  padding-bottom: calc(env(safe-area-inset-bottom) + 42px);
+  padding-left: 38px;
+}
+
+.share-heading {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  margin: 3px 0 26px;
+  font-size: 48px;
+  font-weight: 950;
+  text-align: center;
+  text-shadow: 0 4px 0 #e1d2ee;
+}
+
+.share-heading__subtitle {
+  font-size: 28px;
+  font-weight: 500;
+  text-shadow: none;
+}
+
+.poster-shell {
+  position: relative;
+  z-index: 3;
+  padding: 18px;
+  background: linear-gradient(145deg, #d5c0ff, #b794ef);
+  box-shadow: 0 18px 42px rgba(94, 55, 151, 0.24);
+  border-radius: 38px;
+}
+
+.poster-shell--death { background: linear-gradient(145deg, #c7b5d9, #8b719b); }
+.poster-shell--discharge { background: linear-gradient(145deg, #adf1d2, #c7adff); }
+
+.poster-card {
+  position: relative;
+  min-height: 790px;
+  padding: 33px 34px 28px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 80% 24%, rgba(255, 255, 255, 0.75), transparent 27%),
+    linear-gradient(160deg, rgba(255, 254, 245, 0.98), rgba(255, 250, 238, 0.92));
+  border: 3px solid rgba(94, 66, 117, 0.25);
+  border-radius: 26px;
+}
+
+.poster-shell--death .poster-card { background: linear-gradient(160deg, #fff8e9, #f5ead8); }
+.poster-shell--discharge .poster-card { background: linear-gradient(160deg, #fffefa, #f2fff5); }
+
+.poster-card::before {
+  position: absolute;
+  inset: 15px;
+  content: '';
+  pointer-events: none;
+  border: 2px solid rgba(147, 105, 185, 0.35);
+  border-radius: 18px;
+}
+
+.poster-card__title {
+  position: relative;
+  z-index: 2;
+  display: block;
+  font-family: Georgia, serif;
+  font-size: 40px;
+  font-weight: 900;
+  text-align: center;
+}
+
+.poster-card__stamp {
+  position: absolute;
+  top: 50px;
+  right: 20px;
+  z-index: 5;
+  padding: 8px 12px;
+  color: rgba(111, 75, 151, 0.8);
+  font-size: 23px;
+  font-weight: 900;
+  border: 5px double currentColor;
+  border-radius: 10px;
+  transform: rotate(-12deg);
+}
+
+.poster-shell--death .poster-card__stamp { color: rgba(159, 83, 77, 0.8); }
+.poster-shell--discharge .poster-card__stamp { color: rgba(70, 157, 112, 0.76); }
+
+.poster-card__monster {
+  display: block;
+  width: 330px;
+  height: 330px;
+  margin: 24px auto 5px;
+  filter: drop-shadow(0 15px 18px rgba(89, 64, 119, 0.14));
+}
+
+.poster-card__copy {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 5px 15px 20px;
+  font-size: 24px;
+  font-weight: 650;
+  line-height: 1.5;
+}
+
+.poster-card__monster-name {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 35px;
+  font-weight: 950;
+  text-align: center;
+}
+
+.poster-card__brand {
+  position: absolute;
+  right: 38px;
+  bottom: 25px;
+  left: 38px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 15px;
+  font-size: 19px;
+  font-weight: 750;
+  border-top: 2px solid rgba(99, 70, 116, 0.18);
+}
+
+.poster-card__tape {
+  position: absolute;
+  z-index: 4;
+  width: 90px;
+  height: 32px;
+  opacity: 0.68;
+  background: #b99ae0;
+}
+
+.poster-card__tape--left { top: 5px; left: -18px; transform: rotate(-18deg); }
+.poster-card__tape--right { right: -15px; bottom: 18px; transform: rotate(-35deg); }
+
+.template-picker {
+  position: relative;
+  z-index: 4;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.template-option {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  min-width: 0;
+  color: #3b2749;
+  font-size: 21px;
+  font-weight: 750;
+}
+
+.template-option__preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 110px;
+  height: 145px;
+  background: #fffaf0;
+  border: 5px solid rgba(255, 255, 255, 0.88);
+  box-shadow: 0 8px 20px rgba(78, 55, 98, 0.13);
+  border-radius: 12px;
+}
+
+.template-option__preview image { width: 88px; height: 88px; }
+.template-option__preview--death { background: #efe9de; }
+.template-option__preview--discharge { background: #effff3; }
+.template-option.is-active .template-option__preview { border-color: #8d63d6; transform: translateY(-4px); }
+
+.share-actions {
+  position: relative;
+  z-index: 4;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+  margin-top: 30px;
+}
+
+.share-actions .primary-button,
+.share-actions .secondary-button {
+  min-height: 84px;
+  font-size: 30px;
+  letter-spacing: 0;
+}
+
+.poster-canvas {
+  position: fixed;
+  top: 0;
+  left: -2000px;
+  width: 650px;
+  height: 900px;
+}

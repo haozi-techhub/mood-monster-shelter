@@ -1,0 +1,194 @@
+.gallery-page {
+  padding-right: 38px;
+  padding-left: 38px;
+}
+
+.gallery-heading {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: center;
+  margin: 1px 0 25px;
+  font-size: 52px;
+  font-weight: 950;
+  text-align: center;
+  text-shadow: 0 4px 0 #d9c9ec;
+}
+
+.gallery-heading__subtitle {
+  font-size: 27px;
+  font-weight: 500;
+  text-shadow: none;
+}
+
+.gallery-summary {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: 1fr 1.35fr;
+  gap: 12px 20px;
+  padding: 25px 34px;
+  font-size: 25px;
+}
+
+.gallery-summary > view {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  min-width: 0;
+}
+
+.gallery-summary__number,
+.gallery-summary__strong {
+  font-size: 29px;
+  font-weight: 900;
+}
+
+.gallery-summary__strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dominant-card {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: 215px 1fr;
+  gap: 20px;
+  align-items: center;
+  min-height: 215px;
+  padding: 18px 30px;
+  margin-top: 28px;
+  overflow: visible;
+  background: linear-gradient(110deg, rgba(181, 244, 224, 0.76), rgba(220, 195, 255, 0.74));
+  border: 3px solid rgba(255, 255, 255, 0.75);
+  box-shadow: 0 15px 31px rgba(92, 57, 142, 0.17);
+  border-radius: 32px;
+}
+
+.dominant-card image {
+  width: 205px;
+  height: 195px;
+  filter: drop-shadow(0 10px 14px rgba(82, 61, 101, 0.13));
+}
+
+.dominant-card__copy {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  font-size: 25px;
+  line-height: 1.35;
+}
+
+.dominant-card__title {
+  font-size: 32px;
+  font-weight: 950;
+}
+
+.dominant-card__sticker {
+  position: absolute;
+  top: -18px;
+  right: -8px;
+  padding: 7px 16px;
+  color: #876988;
+  font-size: 22px;
+  font-weight: 900;
+  font-style: italic;
+  background: #ffe4c8;
+  border: 5px solid white;
+  box-shadow: 0 4px 10px rgba(78, 56, 92, 0.13);
+  transform: rotate(12deg);
+  border-radius: 9px;
+}
+
+.dominant-card__tape {
+  position: absolute;
+  top: -15px;
+  left: 18px;
+  width: 120px;
+  height: 27px;
+  background: rgba(171, 145, 220, 0.58);
+  transform: rotate(-4deg);
+}
+
+.gallery-grid {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 17px;
+  margin-top: 28px;
+}
+
+.gallery-item {
+  display: grid;
+  grid-template-columns: 122px 1fr;
+  gap: 10px;
+  align-items: center;
+  min-width: 0;
+  min-height: 154px;
+  padding: 13px 15px;
+  text-align: left;
+  background: rgba(255, 254, 246, 0.88);
+  border: 2px solid rgba(100, 70, 126, 0.12);
+  box-shadow: 0 10px 24px rgba(84, 60, 110, 0.13);
+  border-radius: 25px;
+}
+
+.gallery-item image {
+  width: 120px;
+  height: 125px;
+}
+
+.gallery-item__copy {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  font-size: 19px;
+  line-height: 1.35;
+}
+
+.gallery-item__name {
+  overflow: hidden;
+  font-size: 25px;
+  font-weight: 900;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.gallery-item__tag {
+  align-self: flex-start;
+  padding: 2px 10px;
+  margin-bottom: 2px;
+  font-size: 18px;
+  background: rgba(175, 215, 255, 0.54);
+  border-radius: 999px;
+}
+
+.gallery-item__tag--借口类 { background: rgba(255, 218, 150, 0.54); }
+.gallery-item__tag--混合类 { background: rgba(190, 165, 244, 0.5); }
+
+.gallery-item--locked {
+  position: relative;
+  color: rgba(61, 53, 67, 0.42);
+  background: rgba(204, 204, 204, 0.65);
+}
+
+.gallery-item--locked image {
+  filter: grayscale(1) brightness(0.3);
+  opacity: 0.26;
+}
+
+.gallery-item__locked-copy {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  font-size: 23px;
+  font-weight: 800;
+}

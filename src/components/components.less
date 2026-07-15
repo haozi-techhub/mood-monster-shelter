@@ -1,0 +1,213 @@
+.page-header {
+  position: relative;
+  z-index: 20;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  min-height: 74px;
+  margin-bottom: 14px;
+}
+
+.page-header__side {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.page-header__side--right {
+  justify-content: flex-end;
+}
+
+.page-header__title {
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  width: auto;
+  min-height: 62px;
+  font-size: 27px;
+  font-weight: 700;
+}
+
+.page-header__back-arrow {
+  margin-right: 6px;
+  font-size: 62px;
+  font-weight: 300;
+  line-height: 40px;
+}
+
+.share-glyph {
+  width: 60px;
+  height: 60px;
+  justify-content: center;
+  font-size: 45px;
+  border: 3px solid currentColor;
+  border-radius: 16px;
+}
+
+.bottom-nav {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 80;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.1fr 1fr 1fr;
+  align-items: end;
+  min-height: 116px;
+  padding: 12px 18px calc(env(safe-area-inset-bottom) + 10px);
+  background: rgba(255, 255, 255, 0.93);
+  border-top: 2px solid rgba(96, 69, 119, 0.1);
+  box-shadow: 0 -14px 36px rgba(95, 67, 133, 0.11);
+  backdrop-filter: blur(22px);
+}
+
+.bottom-nav__item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  align-items: center;
+  justify-content: center;
+  min-height: 86px;
+  color: #aaa2ae;
+  font-size: 22px;
+}
+
+.bottom-nav__item.is-active {
+  color: #32124d;
+}
+
+.bottom-nav__icon {
+  font-size: 42px;
+  font-weight: 800;
+  line-height: 45px;
+}
+
+.bottom-nav__capture {
+  align-self: start;
+  justify-self: center;
+  width: 96px;
+  height: 96px;
+  margin-top: -38px;
+  color: #fff;
+  font-size: 63px;
+  font-weight: 300;
+  line-height: 90px;
+  background: linear-gradient(145deg, #d7c2ff, #8a5bea);
+  border: 8px solid rgba(255, 255, 255, 0.94);
+  box-shadow: 0 9px 26px rgba(104, 69, 173, 0.35);
+  border-radius: 50%;
+}
+
+.brand-lockup {
+  position: relative;
+  z-index: 3;
+  width: 380px;
+  padding-top: 34px;
+}
+
+.brand-lockup__arch {
+  position: absolute;
+  top: 0;
+  left: 45px;
+  width: 270px;
+  height: 60px;
+  color: #a579e4;
+  text-align: center;
+  border-top: 7px solid #b58ae6;
+  border-radius: 50% 50% 0 0;
+}
+
+.brand-lockup__arch text {
+  position: relative;
+  top: -20px;
+  padding: 0 14px;
+  font-size: 34px;
+  background: #fffaf2;
+}
+
+.brand-lockup__title {
+  display: block;
+  color: #331253;
+  font-size: 70px;
+  font-weight: 950;
+  line-height: 1.08;
+  letter-spacing: 5px;
+  text-shadow: 0 5px 0 #d7c6f1, 0 9px 18px rgba(65, 24, 91, 0.15);
+}
+
+.brand-lockup__tagline {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-top: 18px;
+  color: #9379ad;
+  font-size: 22px;
+  white-space: nowrap;
+}
+
+.decorations {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.deco {
+  position: absolute;
+  opacity: 0.72;
+  filter: drop-shadow(0 3px 5px rgba(107, 70, 129, 0.12));
+}
+
+.deco--1 { top: 10%; left: 5%; color: #ffd477; font-size: 28px; transform: rotate(-9deg); }
+.deco--2 { top: 13%; right: 10%; color: #f5a7c9; font-size: 25px; transform: rotate(12deg); }
+.deco--3 { top: 27%; right: 5%; color: #82d9dc; font-size: 29px; }
+.deco--4 { top: 36%; left: 7%; color: #c2a2ff; font-size: 14px; }
+.deco--5 { top: 58%; right: 7%; color: #ffd477; font-size: 27px; transform: rotate(12deg); }
+.deco--6 { top: 75%; left: 4%; color: #f8b3d1; font-size: 28px; transform: rotate(-11deg); }
+
+.monster-mini {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+  padding: 10px 8px 14px;
+  background: rgba(255, 255, 255, 0.74);
+  border: 2px solid rgba(112, 73, 161, 0.11);
+  box-shadow: 0 8px 20px rgba(97, 70, 126, 0.09);
+  border-radius: 26px;
+}
+
+.monster-mini__image {
+  width: 126px;
+  height: 126px;
+  margin-bottom: 2px;
+}
+
+.monster-mini__name {
+  max-width: 100%;
+  overflow: hidden;
+  font-size: 24px;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.monster-mini__metric {
+  margin-top: 4px;
+  color: #ae97b7;
+  font-size: 20px;
+}
+
+.monster-mini--compact {
+  padding: 6px 6px 10px;
+}
+
+.monster-mini--compact .monster-mini__image {
+  width: 105px;
+  height: 105px;
+}

@@ -8,6 +8,7 @@ dist/
 build/
 .taro/
 .wechat/
+.swc/
 
 # Taro / 小程序产物
 *.zip
