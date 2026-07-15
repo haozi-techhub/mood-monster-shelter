@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>心情怪兽收容所 · UI 设计稿</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ============ 共享 SVG:mascot(按截图:blob 果冻体+垂直渐变+头顶触手)+ 图标 ============ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="m-grad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#D8BFFF"/>
+      <stop offset="100%" stop-color="#A8E6FF"/>
+    </linearGradient>
+    <radialGradient id="m-hl" cx="36%" cy="24%" r="58%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.82"/>
+      <stop offset="55%" stop-color="#ffffff" stop-opacity="0.14"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="m-glow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="4" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <!-- mascot(blob 圆顶平底 + 垂直渐变 + 头顶触手 + 白眼黑瞳 + 圆球手)-->
+    <symbol id="mascot" viewBox="0 0 200 220">
+      <ellipse cx="100" cy="200" rx="50" ry="9" fill="#674EAD" opacity="0.13"/>
+      <!-- 头顶触手 -->
+      <path d="M122 46 Q138 22 124 14" fill="none" stroke="url(#m-grad)" stroke-width="7" stroke-linecap="round" opacity="0.9"/>
+      <circle cx="124" cy="13" r="5.5" fill="url(#m-grad)" opacity="0.9"/>
+      <!-- 左手 -->
+      <circle cx="42" cy="142" r="16" fill="url(#m-grad)" opacity="0.92"/>
+      <!-- 身体 blob -->
+      <path d="M100 42 C130 42 156 58 160 94 C164 132 156 180 130 191 C118 197 108 197 100 197 C92 197 82 197 70 191 C44 180 36 132 40 94 C44 58 70 42 100 42 Z" fill="url(#m-grad)" opacity="0.9"/>
+      <path d="M100 42 C130 42 156 58 160 94 C164 132 156 180 130 191 C118 197 108 197 100 197 C92 197 82 197 70 191 C44 180 36 132 40 94 C44 58 70 42 100 42 Z" fill="url(#m-hl)"/>
+      <!-- 心形 -->
+      <path d="M100 116 C92 104 76 110 78 124 C80 134 92 142 100 150 C108 142 120 134 122 124 C124 110 108 104 100 116 Z" fill="#FF7EAE" opacity="0.8" filter="url(#m-glow)"/>
+      <!-- 腮红 -->
+      <ellipse cx="68" cy="110" rx="8" ry="6" fill="#FF8FB8" opacity="0.5"/>
+      <ellipse cx="132" cy="110" rx="8" ry="6" fill="#FF8FB8" opacity="0.5"/>
+      <!-- 眼睛(白眼 + 黑点瞳 + 高光)-->
+      <circle cx="82" cy="90" r="11" fill="#fff" opacity="0.96"/>
+      <circle cx="118" cy="90" r="11" fill="#fff" opacity="0.96"/>
+      <circle cx="84" cy="91" r="5" fill="#2B2440"/>
+      <circle cx="120" cy="91" r="5" fill="#2B2440"/>
+      <circle cx="82" cy="88" r="1.8" fill="#fff"/>
+      <circle cx="118" cy="88" r="1.8" fill="#fff"/>
+      <!-- 嘴(粉色微笑)-->
+      <path d="M88 110 Q100 122 112 110" stroke="#FF6FAE" stroke-width="3.2" fill="none" stroke-linecap="round"/>
+      <!-- 右手 -->
+      <circle cx="158" cy="142" r="16" fill="url(#m-grad)" opacity="0.92"/>
+    </symbol>
+
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a2 2 0 0 1-2 2h-4v-6h-6v6H5a2 2 0 0 1-2-2z" fill="currentColor"/></symbol>
+    <symbol id="i-record" viewBox="0 0 24 24"><path d="M12 21s-7-4.3-7-10a4.2 4.2 0 0 1 7-3.1A4.2 4.2 0 0 1 19 11c0 5.7-7 10-7 10z" fill="currentColor"/></symbol>
+    <symbol id="i-find" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-4.2-4.2" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+    <symbol id="i-me" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" fill="currentColor"/><path d="M4 21c0-4.2 4-6.2 8-6.2s8 2 8 6.2z" fill="currentColor"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v5l3.5 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></symbol>
+    <symbol id="i-signal" viewBox="0 0 20 12"><rect x="0" y="8" width="3" height="4" rx="1" fill="currentColor"/><rect x="5" y="5" width="3" height="7" rx="1" fill="currentColor"/><rect x="10" y="2.5" width="3" height="9.5" rx="1" fill="currentColor"/><rect x="15" y="0" width="3" height="12" rx="1" fill="currentColor"/></symbol>
+    <symbol id="i-wifi" viewBox="0 0 16 12"><path d="M8 11.5l1.6-2a2 2 0 0 0-3.2 0L8 11.5z" fill="currentColor"/><path d="M3.5 6.5a6.5 6.5 0 0 1 9 0" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M5.5 8.5a3.8 3.8 0 0 1 5 0" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-batt" viewBox="0 0 26 12"><rect x="0.5" y="0.5" width="22" height="11" rx="3" fill="none" stroke="currentColor" stroke-width="1.4"/><rect x="2" y="2" width="16" height="8" rx="1.5" fill="currentColor"/><rect x="23.5" y="3.5" width="2" height="5" rx="1" fill="currentColor"/></symbol>
+  </defs>
+</svg>
+
+<header class="showcase">
+  <div class="showcase-head">
+    <span class="badge">MOOD MONSTER SHELTER · UI</span>
+    <h1>心情怪兽<span class="accent">收容所</span></h1>
+    <p>1:1 复刻 stitch_ui 截图(_1 首页 / _9 结果页)。mascot 按截图造型:blob 果冻体、垂直紫蓝渐变、头顶触手。移动端竖屏 · 微信小程序 · 9:16。</p>
+  </div>
+
+  <div class="palette-strip">
+    <span class="dot"><span class="swatch" style="background:#FFFBF5"></span>奶油白</span>
+    <span class="dot"><span class="swatch" style="background:#B197FC"></span>柔和紫</span>
+    <span class="dot"><span class="swatch" style="background:#97F4A4"></span>薄荷绿</span>
+    <span class="dot"><span class="swatch" style="background:#74C0FC"></span>天空蓝</span>
+    <span class="dot"><span class="swatch" style="background:#FFB59E"></span>蜜桃粉</span>
+    <span class="dot"><span class="swatch" style="background:#FFD66B"></span>星星黄</span>
+  </div>
+
+  <div class="screens">
+
+    <!-- ============================================================
+         页 1 · 首页(1:1 复刻 _1:设计系统展示页)
+    ============================================================ -->
+    <div class="screen-col">
+      <div class="screen-label"><span class="num">01</span><span class="cn">首页(复刻 _1)</span></div>
+      <div class="phone">
+        <div class="statusbar">
+          <span>9:41</span>
+          <div class="icons">
+            <svg width="18" height="11"><use href="#i-signal"/></svg>
+            <svg width="15" height="11"><use href="#i-wifi"/></svg>
+            <svg width="24" height="11"><use href="#i-batt"/></svg>
+          </div>
+        </div>
+
+        <div class="page">
+          <div class="page-scroll" style="position:relative">
+            <span class="deco" style="top:10px;left:6px;font-size:14px;color:#FFD66B">✦</span>
+            <span class="deco" style="top:60px;right:8px;font-size:12px;color:#74C0FC">✧</span>
+            <span class="deco" style="top:120px;left:4px;font-size:12px;color:#FF8FB8">♥</span>
+
+            <!-- 顶部:标题 + 气泡 + 我的怪兽 -->
+            <div class="top-bar">
+              <div>
+                <div class="brand-title">心情怪兽<span class="grad">收容所</span></div>
+                <div class="brand-sub">接纳每一种心情<span class="dot">·</span>陪伴每一个你</div>
+                <div class="bubble-l">来吧,我帮你收容今天的小怪兽～<span class="heart">♥</span></div>
+              </div>
+              <div class="my-monster-btn"><svg width="16" height="16" style="vertical-align:-3px"><use href="#mascot"/></svg> 我的怪兽 <span class="arr">›</span></div>
+            </div>
+
+            <!-- mascot -->
+            <div class="mascot-stage">
+              <svg class="mascot" style="width:140px;height:156px"><use href="#mascot"/></svg>
+            </div>
+
+            <!-- Color Palette -->
+            <div class="ds-section">
+              <div class="ds-title">Color Palette</div>
+              <div class="pal-row">
+                <div class="pal-item"><span class="pal-swatch" style="background:#FFFBF5"></span><span class="pal-label">Creamy<br>White</span></div>
+                <div class="pal-item"><span class="pal-swatch" style="background:#B197FC"></span><span class="pal-label">Soft<br>Lavender</span></div>
+                <div class="pal-item"><span class="pal-swatch" style="background:#97F4A4"></span><span class="pal-label">Mint<br>Green</span></div>
+                <div class="pal-item"><span class="pal-swatch" style="background:#74C0FC"></span><span class="pal-label">Sky<br>Blue</span></div>
+                <div class="pal-item"><span class="pal-swatch" style="background:#FFB59E"></span><span class="pal-label">Peach<br>Pink</span></div>
+              </div>
+            </div>
+
+            <!-- Typography + CAPTURED 印章 -->
+            <div class="ds-section">
+              <div class="ds-title">Typography</div>
+              <div class="typo-card">
+                <div class="typo-left">
+                  <div class="typo-head">HEADER</div>
+                  <div class="typo-sub">Body text</div>
+                </div>
+                <div class="typo-sample">abcdefghijklm,<br>情越具体越能被<br>理解哦…<br>写下此刻的心情</div>
+                <div class="stamp-circle">CAP-<br/>TURED</div>
+              </div>
+            </div>
+
+            <!-- Components -->
+            <div class="ds-section">
+              <div class="ds-title">Components</div>
+              <div class="comp-grid">
+                <div>
+                  <button class="btn btn-primary btn-block" style="font-size:14px;padding:13px">开始收容 →</button>
+                  <div class="input-wrap" style="margin-top:10px;padding:12px">
+                    <textarea rows="2" placeholder="写下此刻的心情,越具体越能被理解哦…"></textarea>
+                    <div class="count">0/200</div>
+                  </div>
+                  <div class="chip-row" style="margin-top:10px">
+                    <span class="chip">我没时间</span>
+                    <span class="chip">我好焦虑</span>
+                    <span class="chip">我又拖延了</span>
+                    <span class="chip">我不想干活</span>
+                  </div>
+                </div>
+                <div class="archive-mini">
+                  <span class="tape tape-top" style="width:80px"></span>
+                  <div class="ar-head"><span class="ar-title">Archive</span><svg width="14" height="14" style="color:var(--outline)"><use href="#i-clock"/></svg></div>
+                  <div class="ar-illu"><svg class="mascot" style="width:78px;height:88px"><use href="#mascot"/></svg></div>
+                  <span class="stamp ar-stamp" style="position:absolute;bottom:6px;right:6px;width:54px;height:54px;font-size:9px;padding:4px;color:#C8542B;border-color:#C8542B">CAP<br/>TURED</span>
+                  <span class="tape tape-purple" style="position:absolute;bottom:-8px;left:50%;transform:translateX(-50%) rotate(2deg);width:90px;height:14px"></span>
+                </div>
+              </div>
+            </div>
+
+            <span class="deco" style="bottom:40px;right:10px;font-size:14px;color:#B197FC">♥</span>
+            <span class="deco" style="bottom:90px;left:6px;font-size:12px;color:#FFD66B">✦</span>
+          </div>
+        </div>
+
+        <nav class="tabbar">
+          <div class="tab active"><svg><use href="#i-home"/></svg>首页</div>
+          <div class="tab"><svg><use href="#i-record"/></svg>记录</div>
+          <div class="tab-fab"><svg width="22" height="22" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg></div>
+          <div class="tab"><svg><use href="#i-find"/></svg>发现</div>
+          <div class="tab"><svg><use href="#i-me"/></svg>我的</div>
+        </nav>
+        <div class="home-indicator"></div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         页 2 · 怪兽档案 / 结果页(参照 _9)
+    ============================================================ -->
+    <div class="screen-col">
+      <div class="screen-label"><span class="num">02</span><span class="cn">怪兽档案(结果页)</span></div>
+      <div class="phone">
+        <div class="statusbar">
+          <span>9:41</span>
+          <div class="icons">
+            <svg width="18" height="11"><use href="#i-signal"/></svg>
+            <svg width="15" height="11"><use href="#i-wifi"/></svg>
+            <svg width="24" height="11"><use href="#i-batt"/></svg>
+          </div>
+        </div>
+
+        <div class="page">
+          <div class="page-scroll">
+            <div class="result-topbar">
+              <div class="icon-btn"><svg width="18" height="18"><use href="#i-back"/></svg></div>
+              <div class="title">怪兽档案</div>
+              <div class="file-no">#MM-902</div>
+            </div>
+
+            <div class="card archive-card">
+              <span class="tape tape-top"></span>
+              <span class="stamp" style="position:absolute;top:14px;right:14px;">CAP-<br/>TURED</span>
+
+              <div class="archive-illu">
+                <svg class="mascot" style="width:128px;height:146px"><use href="#mascot"/></svg>
+              </div>
+
+              <div class="monster-name">完美主义打磨怪</div>
+              <div class="name-cn-sub">PERFECTIONIST POLISHER · 借口族</div>
+
+              <div class="tag-row">
+                <span class="tag tag-excuse">▢ 借口类</span>
+                <span class="danger danger-midhigh">危险等级 · 中高</span>
+              </div>
+
+              <div class="divider"></div>
+
+              <div class="field">
+                <div class="field-label">常见叫声</div>
+                <div class="field-value">「等我准备好了再开始。」</div>
+              </div>
+              <div class="field">
+                <div class="field-label">真实身份 · 伪装鉴定</div>
+                <div class="field-value">它不是追求完美,是用「准备感」在逃避<span class="strike">真正的</span>发布。</div>
+              </div>
+              <div class="field">
+                <div class="field-label">为什么它会出现</div>
+                <div class="field-value">你害怕不完美会被评价,所以一直打磨,不肯放它出去。</div>
+              </div>
+              <div class="field">
+                <div class="field-label">它在保护你什么</div>
+                <div class="field-value">让你免于「被看见、被否定」的风险。它不是坏怪兽。</div>
+              </div>
+            </div>
+
+            <div class="excuse-panel">
+              <span class="panel-tag">借口粉碎</span>
+              <div class="field" style="margin-top:4px">
+                <div class="field-label">今日粉碎方式</div>
+                <div class="field-value">先做一个<span class="em">「丑丑的 v0」</span>,丑着发布也行。</div>
+              </div>
+              <div class="field" style="margin-bottom:0">
+                <div class="field-label">今日禁止投喂</div>
+                <div class="field-value"><span class="strike">「再查点资料」</span> &nbsp; <span class="strike">「等我准备好」</span></div>
+              </div>
+            </div>
+
+            <div class="microtask">
+              <div class="mt-head">
+                <span>✦ 5 分钟驯化任务</span>
+                <span class="mt-time">5 MIN</span>
+              </div>
+              <div class="mt-body">写下作品集首页的<strong>标题</strong>——只要一个标题就行,不用排版。</div>
+              <button class="btn btn-secondary btn-block">我完成了任务 ✓</button>
+            </div>
+
+            <div class="result-actions">
+              <button class="btn btn-primary full">生成分享卡 ✦</button>
+              <button class="btn btn-secondary">再收容一只</button>
+              <button class="btn btn-secondary">加入图鉴</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="home-indicator"></div>
+      </div>
+    </div>
+
+  </div>
+</header>
+
+</body>
+</html>
