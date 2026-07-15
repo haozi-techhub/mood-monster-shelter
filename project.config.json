@@ -1,0 +1,16 @@
+{
+  "miniprogramRoot": "dist/weapp/",
+  "projectname": "心情怪兽收容所",
+  "description": "把模糊内耗变成一个可执行的小行动",
+  "appid": "touristappid",
+  "setting": {
+    "urlCheck": false,
+    "es6": true,
+    "enhance": true,
+    "compileHotReLoad": true,
+    "postcss": true,
+    "minified": true
+  },
+  "compileType": "miniprogram",
+  "libVersion": "3.7.12"
+}

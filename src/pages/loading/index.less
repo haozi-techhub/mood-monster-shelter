@@ -1,0 +1,195 @@
+.loading-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 100vh;
+  padding: calc(env(safe-area-inset-top) + 105px) 44px calc(env(safe-area-inset-bottom) + 94px);
+  background:
+    radial-gradient(circle at 50% 47%, rgba(180, 143, 251, 0.25), transparent 30%),
+    linear-gradient(180deg, #fffdf5 0%, #fbf6ff 58%, #efe7ff 100%);
+}
+
+.loading-copy {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  align-items: center;
+  text-align: center;
+}
+
+.loading-title {
+  font-size: 54px;
+  font-weight: 950;
+  letter-spacing: 2px;
+  text-shadow: 0 5px 0 #d7c7ec;
+}
+
+.loading-subtitle {
+  color: #4e3b60;
+  font-size: 26px;
+}
+
+.scanner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 620px;
+  height: 620px;
+}
+
+.scanner::before {
+  position: absolute;
+  inset: 96px;
+  content: '';
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.86), rgba(196, 158, 255, 0.24) 58%, transparent 70%);
+  filter: blur(10px);
+  border-radius: 50%;
+}
+
+.scanner__ring {
+  position: absolute;
+  border: 3px solid rgba(145, 92, 228, 0.44);
+  border-radius: 50%;
+}
+
+.scanner__ring--outer {
+  width: 520px;
+  height: 180px;
+  box-shadow: 0 0 22px rgba(135, 74, 229, 0.65), inset 0 0 12px rgba(153, 94, 241, 0.45);
+  transform: rotate(-10deg);
+  animation: ring-pulse 2.2s ease-in-out infinite;
+}
+
+.scanner__ring--inner {
+  bottom: 74px;
+  width: 390px;
+  height: 120px;
+  opacity: 0.45;
+  border-style: dashed;
+}
+
+.scanner__orbit {
+  position: absolute;
+  width: 520px;
+  height: 520px;
+  border: 2px solid rgba(144, 96, 212, 0.12);
+  border-radius: 50%;
+  animation: orbit-rotate 4.2s linear infinite;
+}
+
+.scanner__planet {
+  position: absolute;
+  top: 24px;
+  left: 94px;
+  width: 28px;
+  height: 28px;
+  background: linear-gradient(145deg, #fff, #bc9cff);
+  box-shadow: 0 0 16px #fff;
+  border-radius: 50%;
+}
+
+.scanner__monster {
+  position: relative;
+  z-index: 4;
+  width: 375px;
+  height: 375px;
+  filter: drop-shadow(0 20px 22px rgba(94, 59, 153, 0.22));
+  animation: scanner-float 2.4s ease-in-out infinite;
+}
+
+.scanner__beam {
+  position: absolute;
+  z-index: 5;
+  width: 430px;
+  height: 12px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.94), #ad74ff, transparent);
+  box-shadow: 0 0 22px #b87aff;
+  animation: beam-scan 2.1s ease-in-out infinite;
+}
+
+.scanner__rune {
+  position: absolute;
+  z-index: 1;
+  width: 85px;
+  height: 112px;
+  padding: 18px;
+  color: rgba(91, 54, 139, 0.38);
+  font-size: 35px;
+  background: linear-gradient(145deg, rgba(240, 229, 255, 0.82), rgba(255, 255, 255, 0.45));
+  border: 2px solid rgba(112, 77, 154, 0.12);
+  border-radius: 12px;
+}
+
+.scanner__rune--1 { top: 110px; right: 16px; transform: rotate(8deg); }
+.scanner__rune--2 { bottom: 68px; left: 28px; transform: rotate(-18deg); }
+.scanner__rune--3 { right: 18px; bottom: 62px; transform: rotate(17deg); }
+
+@keyframes scanner-float {
+  0%, 100% { transform: translateY(7px) scale(0.98); }
+  50% { transform: translateY(-12px) scale(1.02); }
+}
+
+@keyframes ring-pulse {
+  0%, 100% { opacity: 0.55; transform: rotate(-10deg) scale(0.96); }
+  50% { opacity: 1; transform: rotate(-10deg) scale(1.05); }
+}
+
+@keyframes orbit-rotate { to { transform: rotate(360deg); } }
+
+@keyframes beam-scan {
+  0%, 100% { opacity: 0.2; transform: translateY(-125px); }
+  50% { opacity: 0.95; transform: translateY(120px); }
+}
+
+.loading-status {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  align-items: center;
+  min-height: 150px;
+  text-align: center;
+  font-size: 27px;
+}
+
+.loading-status__strong {
+  font-size: 29px;
+  font-weight: 850;
+}
+
+.loading-status__input {
+  max-width: 620px;
+  overflow: hidden;
+  color: #806b91;
+  font-size: 22px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.progress-shell {
+  width: 570px;
+  height: 70px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.73);
+  border: 2px solid rgba(95, 59, 140, 0.16);
+  box-shadow: 0 10px 25px rgba(101, 73, 135, 0.16);
+  border-radius: 999px;
+}
+
+.progress-bar {
+  width: 36%;
+  height: 100%;
+  background: linear-gradient(90deg, #9b67ef, #77d5ec);
+  box-shadow: 0 0 18px rgba(145, 88, 233, 0.52);
+  border-radius: inherit;
+  transition: width 650ms ease;
+}
+
+.progress-bar--2 { width: 68%; }
+.progress-bar--3 { width: 94%; }
