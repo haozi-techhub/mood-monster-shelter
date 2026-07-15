@@ -14,6 +14,12 @@ const formatDate = (timestamp: number) => {
   return `${date.getMonth() + 1}月${date.getDate()}日`
 }
 
+const monsterTypeClass = {
+  情绪类: 'emotion',
+  借口类: 'excuse',
+  混合类: 'mixed',
+} as const
+
 export default function GalleryPage() {
   const [records, setRecords] = useState<GalleryRecord[]>(() => getGalleryRecords())
   useDidShow(() => setRecords(getGalleryRecords()))
@@ -72,7 +78,7 @@ export default function GalleryPage() {
               {record ? (
                 <View className='gallery-item__copy'>
                   <Text className='gallery-item__name'>{monster.monsterName}</Text>
-                  <Text className={`gallery-item__tag gallery-item__tag--${monster.monsterType}`}>{monster.monsterType}</Text>
+                  <Text className={`gallery-item__tag gallery-item__tag--${monsterTypeClass[monster.monsterType]}`}>{monster.monsterType}</Text>
                   <Text>出现次数：{record.count} 次</Text>
                   <Text>上次见：{formatDate(record.capturedAt)}</Text>
                 </View>
