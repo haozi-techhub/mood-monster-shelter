@@ -1,0 +1,191 @@
+.discover-heading {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 6px 0 28px;
+  text-align: center;
+}
+
+.discover-heading text:first-child {
+  font-size: 47px;
+  font-weight: 950;
+  text-shadow: 0 4px 0 #e2d2f3;
+}
+
+.discover-heading text:last-child {
+  color: var(--ink-soft);
+  font-size: 24px;
+}
+
+.discover-locked {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  padding: 34px;
+  margin-top: 90px;
+  color: var(--ink-soft);
+  text-align: center;
+  line-height: 1.65;
+}
+
+.discover-locked image {
+  width: 220px;
+  height: 220px;
+  margin-top: -120px;
+}
+
+.discover-locked__tag,
+.discover-dominant__tag,
+.discover-insight__eyebrow {
+  color: #8b65ba;
+  font-size: 21px;
+  font-weight: 900;
+  letter-spacing: 2px;
+}
+
+.discover-locked__title {
+  color: var(--ink);
+  font-size: 34px;
+  font-weight: 900;
+}
+
+.discover-dominant {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 190px 1fr;
+  gap: 24px;
+  align-items: center;
+  padding: 24px 30px;
+  background: linear-gradient(135deg, rgba(219, 255, 244, 0.88), rgba(226, 206, 255, 0.86));
+}
+
+.discover-dominant image {
+  width: 180px;
+  height: 180px;
+}
+
+.discover-dominant > view {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: var(--ink-soft);
+  font-size: 24px;
+  line-height: 1.5;
+}
+
+.discover-dominant__name {
+  color: var(--ink);
+  font-size: 36px;
+  font-weight: 950;
+}
+
+.discover-metrics {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 13px;
+  margin-top: 20px;
+}
+
+.discover-metrics > view {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+  min-height: 128px;
+  padding: 14px 8px;
+  color: var(--ink-soft);
+  font-size: 20px;
+  text-align: center;
+}
+
+.discover-metrics > view text:first-child {
+  color: #5e36a1;
+  font-size: 31px;
+  font-weight: 950;
+}
+
+.discover-insight,
+.discover-recent,
+.discover-week-empty {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  padding: 28px;
+  margin-top: 20px;
+  color: var(--ink-soft);
+  font-size: 25px;
+  line-height: 1.65;
+}
+
+.discover-week-empty {
+  align-items: center;
+  padding: 34px;
+  margin-top: 42px;
+  text-align: center;
+}
+
+.discover-week-empty__image {
+  width: 210px;
+  height: 210px;
+}
+
+.discover-week-empty__image .taro-img__mode-aspectfit {
+  left: 0;
+}
+
+.discover-week-empty .primary-button {
+  width: 100%;
+  margin-top: 6px;
+}
+
+.discover-insight__title,
+.discover-recent__title {
+  color: var(--ink);
+  font-size: 33px;
+  font-weight: 900;
+}
+
+.discover-recent__item {
+  display: grid;
+  grid-template-columns: 74px 1fr auto;
+  gap: 14px;
+  align-items: center;
+  width: 100%;
+  padding: 13px 0;
+  text-align: left;
+  border-bottom: 2px dashed rgba(99, 71, 129, 0.13);
+  border-radius: 16px;
+  transition: background 160ms ease, transform 160ms ease;
+}
+
+.discover-recent__item:active {
+  background: rgba(177, 151, 252, 0.09);
+  transform: scale(0.99);
+}
+
+.discover-recent__item image {
+  width: 68px;
+  height: 68px;
+}
+
+.discover-recent__item > view {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.discover-recent__item > view text:first-child {
+  color: var(--ink);
+  font-weight: 850;
+}

@@ -1,5 +1,5 @@
 import { Button, Image, Text, Textarea, View } from '@tarojs/components'
-import Taro, { useShareAppMessage } from '@tarojs/taro'
+import Taro, { useDidShow, useShareAppMessage } from '@tarojs/taro'
 import { useState } from 'react'
 
 import shelterGuide from '../../assets/monsters/shelter-guide.png'
@@ -8,6 +8,8 @@ import { BrandLockup } from '../../components/BrandLockup'
 import { Decorations } from '../../components/Decorations'
 import { MonsterMiniCard } from '../../components/MonsterMiniCard'
 import { featuredMonsters } from '../../data/monsters'
+import { getActiveAgentSession } from '../../services/agentStorage'
+import type { AgentSession } from '../../types/agent'
 import { isHighRiskInput, safetyMessage } from '../../utils/safety'
 import './index.less'
 
@@ -21,6 +23,9 @@ const quickInputs = [
 export default function IndexPage() {
   const [inputText, setInputText] = useState('')
   const [showSafety, setShowSafety] = useState(false)
+  const [activeSession, setActiveSession] = useState<AgentSession | null>(() => getActiveAgentSession())
+
+  useDidShow(() => setActiveSession(getActiveAgentSession()))
 
   useShareAppMessage(() => ({
     title: '今天是哪只心情怪兽跑出来了？',
@@ -37,7 +42,7 @@ export default function IndexPage() {
       setShowSafety(true)
       return
     }
-    Taro.navigateTo({ url: `/pages/loading/index?text=${encodeURIComponent(value)}` })
+    Taro.navigateTo({ url: `/pages/agent/index?text=${encodeURIComponent(value)}` })
   }
 
   return (
@@ -56,13 +61,20 @@ export default function IndexPage() {
         <BrandLockup />
         <View className='home-guide-wrap'>
           <View className='guide-speech'>
-            <Text>来吧，我帮你{`\n`}收容今天的小怪兽～</Text>
+            <Text>我是紫色收容员{`\n`}陪你把下一步做小～</Text>
             <Text className='guide-speech__heart'>♥</Text>
           </View>
           <View className='guide-glow' />
           <Image className='home-guide' src={shelterGuide} mode='aspectFit' />
         </View>
       </View>
+
+      {activeSession && (
+        <Button className='active-agent-card glass-card' onClick={() => Taro.navigateTo({ url: '/pages/agent/index' })}>
+          <View><Text className='active-agent-card__tag'>ONGOING · 行动还在</Text><Text className='active-agent-card__title'>{activeSession.task?.title || '继续刚才的收容对话'}</Text></View>
+          <Text className='active-agent-card__arrow'>›</Text>
+        </Button>
+      )}
 
       {showSafety ? (
         <View className='safety-card glass-card'>
@@ -94,9 +106,9 @@ export default function IndexPage() {
             ))}
           </View>
           <Button className='primary-button capture-button' onClick={startCapture}>
-            <Text>开始收容</Text><Text className='capture-button__arrow'>›</Text>
+            <Text>让 Agent 带我行动</Text><Text className='capture-button__arrow'>›</Text>
           </Button>
-          <View className='privacy-note'><Text>♢</Text><Text>你的心情，我们会好好保管</Text><Text>♙</Text></View>
+          <View className='privacy-note'><Text>♢</Text><Text>对话只按你的授权保存在本机</Text><Text>♙</Text></View>
         </View>
       )}
 

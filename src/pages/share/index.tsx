@@ -1,39 +1,100 @@
 import { Button, Canvas, Image, Text, View } from '@tarojs/components'
-import Taro, { useRouter, useShareAppMessage } from '@tarojs/taro'
-import { useMemo, useState } from 'react'
+import Taro, { useDidShow, useRouter, useShareAppMessage } from '@tarojs/taro'
+import { useEffect, useMemo, useState } from 'react'
 
 import { Decorations } from '../../components/Decorations'
 import { PageHeader } from '../../components/PageHeader'
+import { findMonsterBySlug } from '../../data/monsters'
+import { getShareDraft } from '../../services/agentStorage'
+import { buildSharePosterContent, type ShareTemplate } from '../../services/sharePoster'
 import { getLatestAnalysis } from '../../services/storage'
 import './index.less'
 
-type ShareTemplate = 'daily' | 'death' | 'discharge'
+type PosterCanvasContext = ReturnType<typeof Taro.createCanvasContext>
 
-const templateMeta: Record<ShareTemplate, { title: string; subtitle: string; stamp: string }> = {
-  daily: { title: '今日心情怪兽卡', subtitle: '把今天的小怪兽带走来晒', stamp: 'CAPTURED' },
-  death: { title: '借口死亡证明分享卡', subtitle: '把今天的借口带走吧', stamp: 'CASE CLOSED' },
-  discharge: { title: '怪兽出院证明分享卡', subtitle: '它完成了今天的小小行动', stamp: 'APPROVED' },
+const ellipsizeCanvasText = (ctx: PosterCanvasContext, text: string, maxWidth: number) => {
+  const chars = Array.from(text)
+  let fitted = ''
+  for (const char of chars) {
+    if (ctx.measureText(`${fitted}${char}…`).width > maxWidth) break
+    fitted += char
+  }
+  return `${fitted}…`
+}
+
+const wrapCanvasText = (ctx: PosterCanvasContext, text: string, maxWidth: number, maxLines = 2) => {
+  const chars = Array.from(text)
+  const lines: string[] = []
+  let current = ''
+
+  for (let index = 0; index < chars.length; index += 1) {
+    const candidate = `${current}${chars[index]}`
+    if (current && ctx.measureText(candidate).width > maxWidth) {
+      lines.push(current)
+      current = chars[index]
+      if (lines.length === maxLines) {
+        const remainder = chars.slice(index).join('')
+        lines[maxLines - 1] = ellipsizeCanvasText(ctx, `${lines[maxLines - 1]}${remainder}`, maxWidth)
+        return lines
+      }
+    } else {
+      current = candidate
+    }
+  }
+
+  if (current && lines.length < maxLines) lines.push(current)
+  return lines
 }
 
 export default function SharePage() {
   const router = useRouter()
+  const sessionId = router.params.sessionId
   const initialTemplate = (['daily', 'death', 'discharge'].includes(router.params.template || '') ? router.params.template : 'daily') as ShareTemplate
   const [template, setTemplate] = useState<ShareTemplate>(initialTemplate)
-  const result = useMemo(() => getLatestAnalysis(), [])
-  const meta = templateMeta[template]
+  const readRouteDraft = () => sessionId ? getShareDraft(sessionId) : null
+  const [draft, setDraft] = useState(readRouteDraft)
+  const fallbackResult = useMemo(() => getLatestAnalysis(), [])
+  const monster = useMemo(
+    () => draft ? findMonsterBySlug(draft.monsterSlug) : fallbackResult,
+    [draft, fallbackResult],
+  )
+  const content = useMemo(
+    () => buildSharePosterContent(template, monster, draft),
+    [draft, monster, template],
+  )
+
+  useDidShow(() => setDraft(readRouteDraft()))
+
+  useEffect(() => {
+    if (!draft) return undefined
+    const remaining = draft.expiresAt - Date.now()
+    if (remaining <= 0) {
+      setDraft(null)
+      return undefined
+    }
+    const expiryTimer = setTimeout(() => {
+      setDraft(sessionId ? getShareDraft(sessionId) : null)
+    }, remaining + 50)
+    return () => clearTimeout(expiryTimer)
+  }, [draft, sessionId])
+
+  const getCurrentContent = (selectedTemplate = template) => {
+    const currentDraft = readRouteDraft()
+    const currentMonster = currentDraft ? findMonsterBySlug(currentDraft.monsterSlug) : fallbackResult
+    return buildSharePosterContent(selectedTemplate, currentMonster, currentDraft)
+  }
 
   useShareAppMessage(() => ({
-    title: `${result.monsterName}：${result.cardText.line}`,
+    title: getCurrentContent().shareTitle,
     path: '/pages/index/index',
   }))
 
   const renderCanvas = async () => {
+    const poster = getCurrentContent()
     const ctx = Taro.createCanvasContext('sharePoster')
-    const bg = template === 'death' ? '#fff7e8' : template === 'discharge' ? '#f3fff6' : '#fffaf2'
-    const accent = template === 'death' ? '#9c665e' : template === 'discharge' ? '#54a783' : '#7650bd'
-    const imageInfo = await Taro.getImageInfo({ src: result.image })
+    const imageInfo = await Taro.getImageInfo({ src: poster.monsterImage })
 
-    ctx.setFillStyle(bg)
+    ctx.setFillStyle(poster.background)
     ctx.fillRect(0, 0, 650, 900)
     ctx.setStrokeStyle('#cbb9dc')
     ctx.setLineWidth(3)
@@ -41,23 +102,34 @@ export default function SharePage() {
     ctx.setFillStyle('#2b1648')
     ctx.setTextAlign('center')
     ctx.setFontSize(34)
-    ctx.fillText(meta.title, 325, 92)
-    ctx.drawImage(imageInfo.path, 175, 120, 300, 300)
-    ctx.setFillStyle(accent)
+    ctx.fillText(poster.cardTitle, 325, 84)
+    ctx.save()
+    ctx.setStrokeStyle(poster.accent)
+    ctx.setLineWidth(2)
+    ctx.strokeRect(474, 46, 128, 42)
+    ctx.setFillStyle(poster.accent)
+    ctx.setFontSize(18)
+    ctx.fillText(poster.stamp, 538, 74)
+    ctx.restore()
+    ctx.drawImage(imageInfo.path, 190, 108, 270, 270)
+    ctx.setFillStyle(poster.accent)
     ctx.setFontSize(42)
-    ctx.fillText(result.monsterName, 325, 470)
+    ctx.fillText(poster.monsterName, 325, 426)
     ctx.setFillStyle('#2b1648')
     ctx.setTextAlign('left')
-    ctx.setFontSize(24)
+    ctx.setFontSize(23)
 
-    const lines = template === 'death'
-      ? [`借口名称：“${result.catchphrase}”`, `死因：${result.excuseCrush}`, `遗言：再等等，我马上就完美了`, `处理建议：${result.microAction}`]
-      : template === 'discharge'
-        ? [`出院原因：完成了 5 分钟启动任务`, `当前状态：停止空转，开始交付 v0`, `复发提醒：${result.doNotFeed}`, `今日成就：${result.microAction}`]
-        : [`常见呢喃：${result.catchphrase}`, `真实身份：${result.trueIdentity}`, `今日粉碎：${result.excuseCrush}`, `任务：${result.microAction}`]
+    let textY = 486
+    poster.lines.forEach(({ label, value }) => {
+      const wrappedLines = wrapCanvasText(ctx, `${label}：${value}`, 526, 2)
+      wrappedLines.forEach((line) => {
+        ctx.fillText(line, 62, textY)
+        textY += 31
+      })
+      textY += 9
+    })
 
-    lines.forEach((line, index) => ctx.fillText(line.slice(0, 25), 62, 545 + index * 58))
-    ctx.setFillStyle(accent)
+    ctx.setFillStyle(poster.accent)
     ctx.setTextAlign('center')
     ctx.setFontSize(23)
     ctx.fillText('心情怪兽收容所  ·  治愈每一个小情绪', 325, 825)
@@ -89,42 +161,24 @@ export default function SharePage() {
       <Decorations />
       <PageHeader />
       <View className='share-heading'>
-        <Text>{meta.title}</Text>
-        <Text className='share-heading__subtitle'>{meta.subtitle}</Text>
+        <Text>{content.title}</Text>
+        <Text className='share-heading__subtitle'>{content.subtitle}</Text>
       </View>
 
       <View className={`poster-shell poster-shell--${template}`}>
         <View className='poster-card'>
           <View className='poster-card__tape poster-card__tape--left' />
           <View className='poster-card__tape poster-card__tape--right' />
-          <Text className='poster-card__title'>{template === 'death' ? '借口死亡证明' : template === 'discharge' ? '怪兽出院证明' : '今日心情怪兽卡'}</Text>
-          <View className='poster-card__stamp'>{meta.stamp}</View>
-          <Image className='poster-card__monster' src={result.image} mode='aspectFit' />
+          <Text className='poster-card__title'>{content.cardTitle}</Text>
+          <View className='poster-card__stamp'>{content.stamp}</View>
+          <Image className='poster-card__monster' src={content.monsterImage} mode='aspectFit' />
 
-          {template === 'death' ? (
-            <View className='poster-card__copy'>
-              <Text>借口名称：『{result.catchphrase}』</Text>
-              <Text>死因：被「先做 v0」当场击毙</Text>
-              <Text>遗言：“再等等，我马上就完美了”</Text>
-              <Text>处理建议：{result.microAction}</Text>
-            </View>
-          ) : template === 'discharge' ? (
-            <View className='poster-card__copy'>
-              <Text>怪兽名称：『{result.monsterName}』</Text>
-              <Text>出院原因：用户完成了 5 分钟启动任务</Text>
-              <Text>当前状态：已停止打磨，开始交付 v0</Text>
-              <Text>复发提醒：{result.doNotFeed}</Text>
-              <Text>今日成就：{result.microAction}</Text>
-            </View>
-          ) : (
-            <View className='poster-card__copy'>
-              <Text className='poster-card__monster-name'>{result.monsterName}</Text>
-              <Text>📣 常见呢喃：{result.catchphrase}</Text>
-              <Text>♙ 真实身份：{result.trueIdentity}</Text>
-              <Text>▤ 今日粉碎：{result.excuseCrush}</Text>
-              <Text>▣ 任务：{result.microAction}</Text>
-            </View>
-          )}
+          <View className='poster-card__copy'>
+            <Text className='poster-card__monster-name'>{content.monsterName}</Text>
+            {content.lines.map((line) => (
+              <Text key={line.label}><Text className='poster-card__label'>{line.label}：</Text>{line.value}</Text>
+            ))}
+          </View>
 
           <View className='poster-card__brand'><Text>♙ 心情怪兽收容所</Text><Text>治愈每一个小情绪</Text></View>
         </View>
@@ -134,7 +188,7 @@ export default function SharePage() {
         {(['daily', 'death', 'discharge'] as ShareTemplate[]).map((item) => (
           <Button key={item} className={`template-option ${template === item ? 'is-active' : ''}`} onClick={() => setTemplate(item)}>
             <View className={`template-option__preview template-option__preview--${item}`}>
-              <Image src={result.image} mode='aspectFit' />
+              <Image src={monster.image} mode='aspectFit' />
             </View>
             <Text>{item === 'daily' ? '今日怪兽卡' : item === 'death' ? '借口死亡证明' : '怪兽出院证明'}</Text>
           </Button>

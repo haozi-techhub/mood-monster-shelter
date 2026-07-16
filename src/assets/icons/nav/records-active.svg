@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <defs>
+    <linearGradient id="recordGradient" x1="24" y1="5" x2="24" y2="43" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#C7A7FF"/>
+      <stop offset="0.55" stop-color="#9764EC"/>
+      <stop offset="1" stop-color="#7544D3"/>
+    </linearGradient>
+    <filter id="recordGlow" x="4" y="1" width="40" height="47" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="3" stdDeviation="2" flood-color="#7141C8" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  <rect x="9" y="7" width="30" height="35" rx="7" fill="url(#recordGradient)" filter="url(#recordGlow)"/>
+  <path d="M18 7V4.8h12V7" fill="none" stroke="#A77BF0" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M24 32.5s-7.2-4.4-7.2-9.4a4.3 4.3 0 0 1 7.2-3.2 4.3 4.3 0 0 1 7.2 3.2c0 5-7.2 9.4-7.2 9.4Z" fill="#FFF9FF"/>
+  <path d="M13.5 12.5h16" stroke="#E9DFFF" stroke-width="2" stroke-linecap="round" opacity="0.68"/>
+</svg>

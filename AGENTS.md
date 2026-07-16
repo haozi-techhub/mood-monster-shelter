@@ -2,16 +2,23 @@
 
 本文件是项目的常驻指令,每次会话 Codex 会自动读取。请严格遵守下列技术栈、架构原则与产品约束。
 
+## 当前产品迭代基线（必须先读）
+
+- 当前迭代为 **Agent V0.4 行动陪伴版**。
+- 涉及 Agent 产品、交互、数据结构、本地记忆、云函数或验收标准的开发前，必须先阅读 `doc/mood-monster-agent-v0.4-plan.md`。
+- 需求发生变化时，先更新该计划，或与实现代码在同一次提交中更新。
+- 若计划与本文件冲突，以本文件中的技术栈、安全边界和固定 16 只怪兽约束为最高优先级。
+
 ---
 
 ## 1. 项目概述
 
 **Mood Monster Shelter(心情怪兽收容所)** 是一个面向年轻人的轻量情绪 + 行动陪伴 Agent。
 
-用户输入一句当前状态 → 系统识别背后的情绪/拖延/借口,把它变成一只「心情怪兽」→ 通过收容档案、伪装鉴定、借口粉碎、5 分钟驯化任务、分享卡片,帮助用户把模糊内耗转化成一个可执行的小行动。
+用户输入一句当前状态 → 紫色收容员补齐缺失信息 → 系统识别背后的情绪/拖延/借口,把它变成一只「心情怪兽」→ 先照顾或直接生成微行动 → 计时执行与反馈降阶 → 形成用户授权范围内的本地记忆。
 
 **核心链路:**
-输入一句状态 → 捕获怪兽 → 生成档案 → 鉴定伪装 → 粉碎借口 → 5 分钟驯化任务 → 分享卡 → 存入图鉴
+表达状态 → 对话补齐槽位 → 捕获怪兽 → 先照顾或直接行动 → 确认任务 → 计时执行 → 完成/卡住反馈 → 自动降阶 → 形成记忆
 
 **怪兽体系:** MVP 共 **16 只怪兽**,分为情绪类 / 借口类 / 混合类(详见 `prd/` 下产品方案文档第 8 节)。
 
@@ -45,7 +52,7 @@
 
 ## 3. 核心架构原则(强约束,务必遵守)
 
-1. **绝不在前端直接调用大模型。** API Key 必须放在云函数(CloudBase Cloud Functions),前端只调用自有云函数接口 `analyzeMood`。
+1. **绝不在前端直接调用大模型。** API Key 必须放在云函数(CloudBase Cloud Functions),前端只调用自有云函数接口 `runActionAgent` 或兼容接口 `analyzeMood`。
 2. **怪兽匹配 = 规则表(固定 16 只)+ LLM 文案生成。** 不要把怪兽名字完全交给模型自由生成,以保证体系稳定、产品风格可控。
 3. **云函数返回前端可直接渲染的结构化 JSON**,前端不做复杂文本解析。`analyzeMood` 返回字段:
    - `monsterName` / `monsterType` / `dangerLevel` / `catchphrase`
@@ -53,6 +60,7 @@
    - `excuseCrush` / `doNotFeed` / `microAction`
    - `cardText: { title, subtitle, line }`
 4. **多阶段 Agent + 结构化输出:** 对模型输出做 JSON Schema 校验,失败时用兜底文案或重试一次,不要把不稳定结构直接暴露给用户。
+5. **状态与副作用由代码控制:** 模型不得直接修改存储、启动计时或创建固定体系外的怪兽；状态转换、计时和持久化由确定性代码执行。
 
 ---
 
@@ -61,17 +69,22 @@
 ```
 mood-monster-shelter/
   src/
-    pages/        # 首页输入 / 收容动画 / 怪兽档案 / 分享卡 / 怪兽图鉴
+    pages/        # 首页输入 / Agent 会话 / 收容动画 / 怪兽档案 / 分享卡 / 怪兽图鉴 / 发现 / 我的
       index/
+      agent/
       loading/
       result/
       share/
       gallery/
+      discover/
+      profile/
     components/   # MonsterCard / CaptureLoading / ExcusePanel / MicroTask / SharePoster / MonsterBadge
     services/     # monsterApi / storage / poster
     data/         # monsters / examples(怪兽规则表、示例输入)
     utils/        # format / id / safety
   cloudfunctions/
+    runActionAgent/
+      index.js
     analyzeMood/
       index.js
 ```
