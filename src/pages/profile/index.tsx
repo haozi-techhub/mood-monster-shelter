@@ -3,9 +3,9 @@ import Taro, { useDidShow } from '@tarojs/taro'
 import { useMemo, useState } from 'react'
 
 import shelterGuide from '../../assets/monsters/shelter-guide.png'
-import { BottomNav } from '../../components/BottomNav'
 import { Decorations } from '../../components/Decorations'
 import { PageHeader } from '../../components/PageHeader'
+import { TabPageLayout } from '../../components/TabPageLayout'
 import {
   clearAgentData,
   getAgentConsent,
@@ -52,7 +52,7 @@ export default function ProfilePage() {
   }
 
   return (
-    <View className='page profile-page'>
+    <TabPageLayout active='profile' className='profile-page'>
       <Decorations />
       <PageHeader title='我的收容所' showShare={false} />
 
@@ -91,7 +91,6 @@ export default function ProfilePage() {
       </View>
 
       <View className='profile-boundary'><Text>心情怪兽收容所是轻量自我观察和行动工具，不提供医疗或心理诊断。</Text></View>
-      <BottomNav active='profile' />
-    </View>
+    </TabPageLayout>
   )
 }

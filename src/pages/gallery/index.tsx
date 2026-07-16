@@ -3,9 +3,9 @@ import Taro, { useDidShow, useShareAppMessage } from '@tarojs/taro'
 import { useMemo, useState } from 'react'
 
 import shelterGuide from '../../assets/monsters/shelter-guide.png'
-import { BottomNav } from '../../components/BottomNav'
 import { Decorations } from '../../components/Decorations'
 import { PageHeader } from '../../components/PageHeader'
+import { TabPageLayout } from '../../components/TabPageLayout'
 import { findMonsterBySlug, monsters } from '../../data/monsters'
 import { getMemorySummaries, getWeeklyAgentStats } from '../../services/agentStorage'
 import { getGalleryRecords, saveLatestAnalysis, type GalleryRecord } from '../../services/storage'
@@ -60,7 +60,7 @@ export default function GalleryPage() {
   }
 
   return (
-    <View className='page gallery-page'>
+    <TabPageLayout active='records' className='gallery-page'>
       <Decorations />
       <PageHeader />
       <View className='gallery-heading'>
@@ -139,7 +139,6 @@ export default function GalleryPage() {
         })}
       </View>
 
-      <BottomNav active='records' />
-    </View>
+    </TabPageLayout>
   )
 }

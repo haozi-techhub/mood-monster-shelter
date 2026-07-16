@@ -1,19 +1,18 @@
 import { Button, Image, Text, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 
-import captureIcon from '../assets/icons/nav/capture.svg.png'
-import discoverActiveIcon from '../assets/icons/nav/discover-active.svg.png'
-import discoverIcon from '../assets/icons/nav/discover.svg.png'
-import homeActiveIcon from '../assets/icons/nav/home-active.svg.png'
-import homeIcon from '../assets/icons/nav/home.svg.png'
-import profileActiveIcon from '../assets/icons/nav/profile-active.svg.png'
-import profileIcon from '../assets/icons/nav/profile.svg.png'
-import recordsActiveIcon from '../assets/icons/nav/records-active.svg.png'
-import recordsIcon from '../assets/icons/nav/records.svg.png'
+import discoverActiveIcon from '../assets/icons/nav/discover-active-v2.png'
+import discoverIcon from '../assets/icons/nav/discover-v2.png'
+import homeActiveIcon from '../assets/icons/nav/home-active-v2.png'
+import homeIcon from '../assets/icons/nav/home-v2.png'
+import profileActiveIcon from '../assets/icons/nav/profile-active-v2.png'
+import profileIcon from '../assets/icons/nav/profile-v2.png'
+import recordsActiveIcon from '../assets/icons/nav/records-active-v2.png'
+import recordsIcon from '../assets/icons/nav/records-v2.png'
 
 import './components.less'
 
-type ActiveTab = 'home' | 'records' | 'discover' | 'profile'
+export type ActiveTab = 'home' | 'records' | 'discover' | 'profile'
 
 interface BottomNavProps {
   active?: ActiveTab
@@ -57,7 +56,8 @@ export function BottomNav({ active = 'home' }: BottomNavProps) {
 
       <Button className='bottom-nav__capture' aria-label='收容新的心情怪兽' onClick={() => go('/pages/agent/index')}>
         <View className='bottom-nav__capture-orb'>
-          <Image className='bottom-nav__capture-icon' src={captureIcon} mode='scaleToFill' />
+          <View className='bottom-nav__capture-shine' />
+          <View className='bottom-nav__plus' />
         </View>
       </Button>
 

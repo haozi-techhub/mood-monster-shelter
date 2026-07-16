@@ -2,7 +2,7 @@
 
 一款面向年轻人的轻量情绪与行动陪伴 Agent：输入一句当前状态，由紫色收容员补齐必要信息、捕获固定体系内的心情怪兽，并陪用户完成一个能立刻开始的小动作。
 
-当前产品与技术基线见 [`doc/mood-monster-agent-v0.4-plan.md`](doc/mood-monster-agent-v0.4-plan.md)。
+当前产品与技术基线见 [`doc/mood-monster-agent-v0.4-plan.md`](doc/mood-monster-agent-v0.4-plan.md)，页面视觉与适配基线见 [`doc/mood-monster-visual-design-guidelines-v0.1.md`](doc/mood-monster-visual-design-guidelines-v0.1.md)。
 
 ## 当前完成内容
 
@@ -79,7 +79,8 @@ TARO_APP_USE_CLOUD=true TARO_APP_CLOUDBASE_ENV=你的环境ID npm run build:weap
 - 小程序运行时素材：`src/assets/monsters/`，已缩放以控制主包体积。
 - 高清透明 PNG 原稿：`artwork/monsters/`。
 - 统一生成规范与角色提示词：[PROMPTS.md](artwork/monsters/PROMPTS.md)。
-- 首页品牌标题使用 ZCOOL KuaiLe 的精简字体子集，按 SIL Open Font License 1.1 随项目分发；授权文件位于 `src/assets/fonts/ZCOOL-KuaiLe-OFL.txt`。
+- 首页品牌标题固定使用 `src/assets/brand/home-wordmark.png`，不得用普通字体或 CSS 文字重绘；视觉规则见设计规范。
+- 项目仍保留 ZCOOL KuaiLe 精简字体子集及 SIL Open Font License 1.1 授权文件：`src/assets/fonts/ZCOOL-KuaiLe-OFL.txt`。
 
 当前微信小程序构建产物约 1.8 MB。若后续增加更多动作、皮肤或海报大图，建议把高清素材迁移到 CloudBase Storage，仅在主包保留低分辨率占位图。
 
@@ -101,4 +102,5 @@ artwork/
   monsters/       高清透明角色原稿与提示词
 doc/
   mood-monster-agent-v0.4-plan.md  当前迭代执行基线
+  mood-monster-visual-design-guidelines-v0.1.md  视觉设计与手机适配基线
 ```

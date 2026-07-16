@@ -1,12 +1,12 @@
 import { Button, Image, Text, Textarea, View } from '@tarojs/components'
 import Taro, { useDidShow, useShareAppMessage } from '@tarojs/taro'
-import { useState } from 'react'
+import { useState, type CSSProperties } from 'react'
 
 import shelterGuide from '../../assets/monsters/shelter-guide.png'
-import { BottomNav } from '../../components/BottomNav'
 import { BrandLockup } from '../../components/BrandLockup'
 import { Decorations } from '../../components/Decorations'
 import { MonsterMiniCard } from '../../components/MonsterMiniCard'
+import { TabPageLayout } from '../../components/TabPageLayout'
 import { featuredMonsters } from '../../data/monsters'
 import { getActiveAgentSession } from '../../services/agentStorage'
 import type { AgentSession } from '../../types/agent'
@@ -20,12 +20,60 @@ const quickInputs = [
   { label: '我不想干活', icon: '◔' },
 ]
 
+interface HomeViewport {
+  className: string
+  style: CSSProperties
+}
+
+const getHomeViewport = (): HomeViewport => {
+  const fallback: HomeViewport = {
+    className: '',
+    style: {
+      '--home-status-bar-height': '20px',
+      '--home-nav-bar-height': '44px',
+      '--home-menu-safe-right': '12px',
+    } as CSSProperties,
+  }
+
+  try {
+    const windowInfo = Taro.getWindowInfo()
+    const menuButton = Taro.getMenuButtonBoundingClientRect?.()
+    const statusBarHeight = windowInfo.statusBarHeight || 20
+    const navBarHeight = menuButton?.height
+      ? Math.max(40, (menuButton.top - statusBarHeight) * 2 + menuButton.height)
+      : 44
+    const menuSafeRight = menuButton?.left
+      ? Math.max(12, windowInfo.windowWidth - menuButton.left + 8)
+      : 12
+    const viewportRatio = windowInfo.windowHeight / windowInfo.windowWidth
+    const classNames = [
+      windowInfo.windowWidth <= 360 ? 'home-page--narrow' : '',
+      windowInfo.windowHeight <= 760 || viewportRatio <= 1.9 ? 'home-page--compact' : '',
+    ].filter(Boolean)
+
+    return {
+      className: classNames.join(' '),
+      style: {
+        '--home-status-bar-height': `${statusBarHeight}px`,
+        '--home-nav-bar-height': `${navBarHeight}px`,
+        '--home-menu-safe-right': `${menuSafeRight}px`,
+      } as CSSProperties,
+    }
+  } catch {
+    return fallback
+  }
+}
+
 export default function IndexPage() {
   const [inputText, setInputText] = useState('')
   const [showSafety, setShowSafety] = useState(false)
   const [activeSession, setActiveSession] = useState<AgentSession | null>(() => getActiveAgentSession())
+  const [viewport, setViewport] = useState<HomeViewport>(getHomeViewport)
 
-  useDidShow(() => setActiveSession(getActiveAgentSession()))
+  useDidShow(() => {
+    setActiveSession(getActiveAgentSession())
+    setViewport(getHomeViewport())
+  })
 
   useShareAppMessage(() => ({
     title: '今天是哪只心情怪兽跑出来了？',
@@ -46,10 +94,9 @@ export default function IndexPage() {
   }
 
   return (
-    <View className='page home-page'>
+    <TabPageLayout active='home' className={`home-page ${viewport.className}`} style={viewport.style}>
       <Decorations />
       <View className='home-top'>
-        <Text className='home-time'>9:16</Text>
         <Button className='my-monsters' onClick={() => Taro.navigateTo({ url: '/pages/gallery/index' })}>
           <Image src={shelterGuide} mode='aspectFit' />
           <Text>我的怪兽</Text>
@@ -61,7 +108,10 @@ export default function IndexPage() {
         <BrandLockup />
         <View className='home-guide-wrap'>
           <View className='guide-speech'>
-            <Text>我是紫色收容员{`\n`}陪你把下一步做小～</Text>
+            <View className='guide-speech__copy'>
+              <Text>我是紫色收容员</Text>
+              <Text>陪你把下一步做小～</Text>
+            </View>
             <Text className='guide-speech__heart'>♥</Text>
           </View>
           <View className='guide-glow' />
@@ -106,7 +156,16 @@ export default function IndexPage() {
             ))}
           </View>
           <Button className='primary-button capture-button' onClick={startCapture}>
-            <Text>让 Agent 带我行动</Text><Text className='capture-button__arrow'>›</Text>
+            <View className='capture-button__sparkles' aria-hidden>
+              <Text className='capture-button__sparkle capture-button__sparkle--1'>✦</Text>
+              <Text className='capture-button__sparkle capture-button__sparkle--2'>✧</Text>
+              <Text className='capture-button__sparkle capture-button__sparkle--3'>✦</Text>
+              <Text className='capture-button__sparkle capture-button__sparkle--4'>✧</Text>
+              <Text className='capture-button__sparkle capture-button__sparkle--5'>✦</Text>
+              <Text className='capture-button__sparkle capture-button__sparkle--6'>✧</Text>
+            </View>
+            <Text className='capture-button__label'>开始收容</Text>
+            <Text className='capture-button__arrow'>›</Text>
           </Button>
           <View className='privacy-note'><Text>♢</Text><Text>对话只按你的授权保存在本机</Text><Text>♙</Text></View>
         </View>
@@ -123,7 +182,6 @@ export default function IndexPage() {
         </View>
       </View>
 
-      <BottomNav active='home' />
-    </View>
+    </TabPageLayout>
   )
 }

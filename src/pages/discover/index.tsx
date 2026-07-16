@@ -3,9 +3,9 @@ import Taro, { useDidShow } from '@tarojs/taro'
 import { useMemo, useState } from 'react'
 
 import shelterGuide from '../../assets/monsters/shelter-guide.png'
-import { BottomNav } from '../../components/BottomNav'
 import { Decorations } from '../../components/Decorations'
 import { PageHeader } from '../../components/PageHeader'
+import { TabPageLayout } from '../../components/TabPageLayout'
 import { findMonsterBySlug } from '../../data/monsters'
 import { getMemorySummaries, getWeeklyAgentStats } from '../../services/agentStorage'
 import type { MemorySummary, WeeklyAgentStats } from '../../types/agent'
@@ -41,7 +41,7 @@ export default function DiscoverPage() {
   }
 
   return (
-    <View className='page discover-page'>
+    <TabPageLayout active='discover' className='discover-page'>
       <Decorations />
       <PageHeader title='怪兽发现' showShare={false} />
       <View className='discover-heading'>
@@ -115,7 +115,6 @@ export default function DiscoverPage() {
           )}
         </>
       )}
-      <BottomNav active='discover' />
-    </View>
+    </TabPageLayout>
   )
 }

@@ -2,9 +2,9 @@ import { Button, Image, Text, View } from '@tarojs/components'
 import Taro, { useDidShow, useRouter } from '@tarojs/taro'
 import { useState } from 'react'
 
-import { BottomNav } from '../../components/BottomNav'
 import { Decorations } from '../../components/Decorations'
 import { PageHeader } from '../../components/PageHeader'
+import { TabPageLayout } from '../../components/TabPageLayout'
 import { findMonsterBySlug } from '../../data/monsters'
 import { getAgentRecordDetail } from '../../services/agentStorage'
 import type { AgentRecordDetail, BlockReason, TaskAdjustment } from '../../types/agent'
@@ -79,7 +79,7 @@ export default function RecordDetailPage() {
 
   if (!detail) {
     return (
-      <View className='page record-detail-page'>
+      <TabPageLayout active='records' className='record-detail-page'>
         <Decorations />
         <PageHeader title='行动档案' showShare={false} />
         <View className='record-detail-empty glass-card'>
@@ -88,8 +88,7 @@ export default function RecordDetailPage() {
           <Text>它可能已被清除，或来自一条未开启本地记忆的会话。</Text>
           <Button className='primary-button' onClick={backToRecords}>返回记录页</Button>
         </View>
-        <BottomNav active='records' />
-      </View>
+      </TabPageLayout>
     )
   }
 
@@ -97,7 +96,7 @@ export default function RecordDetailPage() {
   const detailAvailable = detail.availability === 'available'
 
   return (
-    <View className='page record-detail-page'>
+    <TabPageLayout active='records' className='record-detail-page'>
       <Decorations />
       <PageHeader title='行动档案' showShare={false} />
 
@@ -197,7 +196,6 @@ export default function RecordDetailPage() {
       )}
 
       <Button className='secondary-button record-detail-back' onClick={backToRecords}>返回全部记录</Button>
-      <BottomNav active='records' />
-    </View>
+    </TabPageLayout>
   )
 }

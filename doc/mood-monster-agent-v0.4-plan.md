@@ -1,7 +1,7 @@
 ---
 status: Active
 version: V0.4
-updated: 2026-07-16
+updated: 2026-07-17
 current_milestone: 9. 行动闭环完善完成，进入云环境与真机持续验证
 owner: Mood Monster Shelter
 ---
@@ -28,7 +28,7 @@ owner: Mood Monster Shelter
 - 新增 Agent 会话页、首次记忆授权、卡片式槽位追问、情绪照顾/直接行动双路径、时间戳计时、回访和两次任务降阶。
 - 新增 14 天完整会话清理、无原话结构化摘要、发现洞察、我的隐私设置，并将行动摘要联动到记录页。
 - 新增本地安全埋点队列；属性名过滤原始输入、消息和对话字段。
-- 首页品牌标题使用内置的 ZCOOL KuaiLe 精简字体子集，并按 UI 参考统一深紫描边、浅紫立体投影与两行标题比例。
+- 首页品牌标题固定使用 `src/assets/brand/home-wordmark.png`，不再使用系统字、CSS 文字或逐字变形重绘；具体视觉与适配规则以 `doc/mood-monster-visual-design-guidelines-v0.1.md` 为准。
 - 底部菜单采用项目原创导航图标资产，统一圆角线宽、视觉重心、激活态紫色渐变和文字基线。
 - 新增 `TaskAdjustment` 调整记录、`AgentRecordDetail` 详情查询和兼容旧缓存的结构化迁移；14 天内展示任务与调整时间线，到期后只保留无原话摘要。
 - 新增 30 分钟 `ShareDraft`，出院证明使用真实任务、时长、第一步和完成标准；页面预览与 Canvas 使用同一内容模型，过期后不虚构任务信息。

@@ -1,15 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
   <defs>
     <linearGradient id="profileGradient" x1="24" y1="6" x2="24" y2="43" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#C9AAFF"/>
-      <stop offset="0.54" stop-color="#9865ED"/>
-      <stop offset="1" stop-color="#7443D2"/>
+      <stop stop-color="#CBAAFF"/>
+      <stop offset="0.54" stop-color="#9D6BEF"/>
+      <stop offset="1" stop-color="#7948D6"/>
     </linearGradient>
     <filter id="profileGlow" x="3" y="3" width="42" height="44" filterUnits="userSpaceOnUse">
-      <feDropShadow dx="0" dy="3" stdDeviation="2" flood-color="#7141C8" flood-opacity="0.3"/>
+      <feDropShadow dx="0" dy="2.3" stdDeviation="1.8" flood-color="#7141C8" flood-opacity="0.27"/>
     </filter>
   </defs>
-  <circle cx="24" cy="15.5" r="8.5" fill="url(#profileGradient)" filter="url(#profileGlow)"/>
-  <path d="M7.5 41c1.2-8.8 7.2-13.8 16.5-13.8S39.3 32.2 40.5 41Z" fill="url(#profileGradient)" filter="url(#profileGlow)"/>
+  <circle cx="24" cy="15.5" r="8" fill="url(#profileGradient)" filter="url(#profileGlow)"/>
+  <path d="M8.5 40.5C9.7 32.1 15.4 27.4 24 27.4s14.3 4.7 15.5 13.1Z" fill="url(#profileGradient)" filter="url(#profileGlow)"/>
   <path d="M19 10.2a7.2 7.2 0 0 1 7.2-1.4" fill="none" stroke="#EADFFF" stroke-width="2" stroke-linecap="round" opacity="0.72"/>
 </svg>
