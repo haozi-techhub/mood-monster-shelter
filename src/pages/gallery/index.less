@@ -46,6 +46,84 @@
   font-weight: 900;
 }
 
+.gallery-actions {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 22px 26px;
+  margin-top: 20px;
+}
+
+.gallery-actions__heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 10px;
+}
+
+.gallery-actions__heading text:first-child {
+  font-size: 29px;
+  font-weight: 900;
+}
+
+.gallery-actions__heading text:last-child {
+  color: #927da2;
+  font-size: 20px;
+}
+
+.gallery-action-row {
+  display: grid;
+  grid-template-columns: 72px 1fr auto;
+  gap: 13px;
+  align-items: center;
+  width: 100%;
+  padding: 12px 0;
+  text-align: left;
+  border-top: 2px dashed rgba(96, 69, 119, 0.12);
+  border-radius: 16px;
+  transition: background 160ms ease, transform 160ms ease;
+}
+
+.gallery-action-row:active {
+  background: rgba(177, 151, 252, 0.09);
+  transform: scale(0.99);
+}
+
+.gallery-action-row image {
+  width: 68px;
+  height: 68px;
+}
+
+.gallery-action-row > view {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  color: var(--ink-soft);
+  font-size: 20px;
+}
+
+.gallery-action-row > view text:first-child {
+  color: var(--ink);
+  font-size: 24px;
+  font-weight: 850;
+}
+
+.gallery-action-row__status {
+  padding: 6px 12px;
+  color: #438269;
+  font-size: 19px;
+  font-weight: 800;
+  background: #dff7ec;
+  border-radius: 999px;
+}
+
+.gallery-action-row__status--abandoned {
+  color: #8d6b78;
+  background: #f7e9ef;
+}
+
 .gallery-summary__strong {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -113,6 +191,22 @@
   height: 27px;
   background: rgba(171, 145, 220, 0.58);
   transform: rotate(-4deg);
+}
+
+.dominant-card--empty {
+  grid-template-columns: 175px 1fr;
+  min-height: 190px;
+  background: linear-gradient(110deg, rgba(247, 242, 255, 0.82), rgba(255, 245, 232, 0.82));
+}
+
+.dominant-card--empty image {
+  width: 170px;
+  height: 165px;
+  opacity: 0.88;
+}
+
+.dominant-card--empty .dominant-card__copy {
+  color: var(--ink-soft);
 }
 
 .gallery-grid {

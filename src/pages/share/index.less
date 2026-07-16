@@ -101,10 +101,11 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding: 5px 15px 20px;
+  padding: 5px 15px 72px;
   font-size: 24px;
   font-weight: 650;
   line-height: 1.5;
+  overflow-wrap: anywhere;
 }
 
 .poster-card__monster-name {
@@ -114,6 +115,21 @@
   font-weight: 950;
   text-align: center;
 }
+
+.poster-card__copy > text:not(.poster-card__monster-name) {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.poster-card__label {
+  color: #6a478d;
+  font-weight: 850;
+}
+
+.poster-shell--death .poster-card__label { color: #86534c; }
+.poster-shell--discharge .poster-card__label { color: #3e8665; }
 
 .poster-card__brand {
   position: absolute;
@@ -199,6 +215,6 @@
   position: fixed;
   top: 0;
   left: -2000px;
-  width: 650px;
-  height: 900px;
+  width: 650PX;
+  height: 900PX;
 }

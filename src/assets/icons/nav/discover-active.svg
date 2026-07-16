@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <defs>
+    <linearGradient id="planetGradient" x1="18" y1="13" x2="31" y2="36" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#D2B9FF"/>
+      <stop offset="0.48" stop-color="#9B68EE"/>
+      <stop offset="1" stop-color="#7443D2"/>
+    </linearGradient>
+    <filter id="planetGlow" x="1" y="3" width="46" height="43" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="3" stdDeviation="2" flood-color="#7141C8" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  <circle cx="24" cy="24" r="11.5" fill="url(#planetGradient)" filter="url(#planetGlow)"/>
+  <circle cx="20.5" cy="20.3" r="2.1" fill="#E9DDFF" opacity="0.9"/>
+  <circle cx="28" cy="27.6" r="1.7" fill="#6D3BC3" opacity="0.72"/>
+  <path d="M7 30.5c6.1 2.7 17.2.8 25.1-4.4S43.3 14.7 38 10.5" fill="none" stroke="#8050D9" stroke-width="4" stroke-linecap="round"/>
+  <path d="M9.4 29.7c5.8 1.2 14-.8 20.3-4.9" fill="none" stroke="#E6D8FF" stroke-width="1.5" stroke-linecap="round" opacity="0.84"/>
+  <path d="m37 7.6 1 2.6 2.6 1-2.6 1-1 2.6-1-2.6-2.6-1 2.6-1Z" fill="#A879F0"/>
+</svg>

@@ -1,6 +1,8 @@
 import Taro from '@tarojs/taro'
 import type { ReactNode } from 'react'
 
+import { purgeExpiredAgentData } from './services/agentStorage'
+import { sanitizeLatestAnalysisStorage } from './services/storage'
 import './app.less'
 
 const cloud = (Taro as typeof Taro & {
@@ -13,6 +15,9 @@ if (process.env.TARO_APP_USE_CLOUD === 'true' && cloud) {
     traceUser: true,
   })
 }
+
+purgeExpiredAgentData()
+sanitizeLatestAnalysisStorage()
 
 export default function App({ children }: { children: ReactNode }) {
   return children

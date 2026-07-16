@@ -1,6 +1,6 @@
 import Taro from '@tarojs/taro'
 
-import { defaultMonster, monsters, type MonsterProfile } from '../data/monsters'
+import { defaultMonster, type MonsterProfile } from '../data/monsters'
 
 export interface AnalysisResult extends MonsterProfile {
   inputText: string
@@ -31,33 +31,45 @@ export const createDefaultAnalysis = (): AnalysisResult => ({
   collectionId: `MM-${Date.now()}`,
 })
 
-export const saveLatestAnalysis = (result: AnalysisResult) => Taro.setStorageSync(LATEST_KEY, result)
+const withoutRawInput = (result: AnalysisResult): AnalysisResult => result.safety
+  ? { ...createDefaultAnalysis(), inputText: '', capturedAt: result.capturedAt, collectionId: result.collectionId, safety: result.safety }
+  : { ...result, inputText: '' }
 
-export const getLatestAnalysis = (): AnalysisResult => {
+export const saveLatestAnalysis = (result: AnalysisResult) => Taro.setStorageSync(LATEST_KEY, withoutRawInput(result))
+
+export const sanitizeLatestAnalysisStorage = (): AnalysisResult | null => {
   try {
-    return Taro.getStorageSync<AnalysisResult>(LATEST_KEY) || createDefaultAnalysis()
+    const stored = Taro.getStorageSync<AnalysisResult>(LATEST_KEY)
+    if (!stored) return null
+    const sanitized = withoutRawInput(stored)
+    if (stored.inputText || stored.safety) Taro.setStorageSync(LATEST_KEY, sanitized)
+    return sanitized
   } catch {
-    return createDefaultAnalysis()
+    return null
   }
 }
 
-const makeDemoRecords = (): GalleryRecord[] => monsters.slice(0, 7).map((monster, index) => ({
-  collectionId: `DEMO-${monster.id}`,
-  monsterSlug: monster.slug,
-  capturedAt: Date.now() - index * 86_400_000,
-  count: index === 6 ? 4 : index % 3 + 1,
-  completed: index % 2 === 0,
-}))
+export const getLatestAnalysis = (): AnalysisResult => {
+  return sanitizeLatestAnalysisStorage() || createDefaultAnalysis()
+}
+
+export const consumeLatestAnalysis = (): AnalysisResult => {
+  const result = sanitizeLatestAnalysisStorage() || createDefaultAnalysis()
+  if (result.safety) {
+    try { Taro.removeStorageSync(LATEST_KEY) } catch { /* the safety response is already held in page state */ }
+  }
+  return result
+}
 
 export const getGalleryRecords = (): GalleryRecord[] => {
   try {
     const records = Taro.getStorageSync<GalleryRecord[]>(GALLERY_KEY)
-    if (records?.length) return records
-    const seeded = makeDemoRecords()
-    Taro.setStorageSync(GALLERY_KEY, seeded)
-    return seeded
+    if (!Array.isArray(records)) return []
+    const realRecords = records.filter((record) => !record.collectionId.startsWith('DEMO-'))
+    if (realRecords.length !== records.length) Taro.setStorageSync(GALLERY_KEY, realRecords)
+    return realRecords
   } catch {
-    return makeDemoRecords()
+    return []
   }
 }
 
@@ -71,4 +83,13 @@ export const addToGallery = (result: AnalysisResult, completed = false): Gallery
     : [{ collectionId: result.collectionId, monsterSlug: result.slug, capturedAt: Date.now(), count: 1, completed }, ...records]
   Taro.setStorageSync(GALLERY_KEY, next)
   return next
+}
+
+export const clearMonsterData = () => {
+  try {
+    Taro.removeStorageSync(LATEST_KEY)
+    Taro.setStorageSync(GALLERY_KEY, [])
+  } catch {
+    // Data-clearing actions stay best-effort when device storage is unavailable.
+  }
 }

@@ -8,7 +8,9 @@
     "dev:weapp": "taro build --type weapp --watch",
     "build:h5": "taro build --type h5",
     "dev:h5": "taro build --type h5 --watch",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test:agent": "node --test cloudfunctions/runActionAgent/index.test.js",
+    "test:client": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --experimental-strip-types --test tests/*.test.mjs"
   },
   "browserslist": [
     "last 3 versions",

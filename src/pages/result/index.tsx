@@ -1,21 +1,30 @@
 import { Button, Image, Text, View } from '@tarojs/components'
-import Taro, { useDidShow, useShareAppMessage } from '@tarojs/taro'
-import { useState } from 'react'
+import Taro, { useRouter, useShareAppMessage } from '@tarojs/taro'
+import { useEffect, useState } from 'react'
 
 import { Decorations } from '../../components/Decorations'
 import { PageHeader } from '../../components/PageHeader'
-import { addToGallery, getLatestAnalysis, type AnalysisResult } from '../../services/storage'
+import { addToGallery, consumeLatestAnalysis, type AnalysisResult } from '../../services/storage'
 import './index.less'
 
 export default function ResultPage() {
-  const [result, setResult] = useState<AnalysisResult>(() => getLatestAnalysis())
+  const router = useRouter()
+  const readOnly = router.params.source === 'gallery'
+  const [result] = useState<AnalysisResult>(() => consumeLatestAnalysis())
   const [added, setAdded] = useState(false)
 
-  useDidShow(() => setResult(getLatestAnalysis()))
   useShareAppMessage(() => ({
-    title: `我捕获了「${result.monsterName}」`,
+    title: result.safety ? '心情怪兽收容所 · 先照顾好此刻的自己' : `我捕获了「${result.monsterName}」`,
     path: '/pages/index/index',
   }))
+
+  useEffect(() => {
+    if (!result.safety) return undefined
+    Taro.hideShareMenu().catch(() => undefined)
+    return () => {
+      Taro.showShareMenu({}).catch(() => undefined)
+    }
+  }, [result.safety])
 
   const addMonster = (completed = false) => {
     addToGallery(result, completed)
@@ -79,7 +88,7 @@ export default function ResultPage() {
           </View>
 
           <View className='archive-panel archive-panel--task'>
-            <Text className='archive-panel__title'><Text className='highlight'>5 分钟驯化任务</Text></Text>
+            <Text className='archive-panel__title'><Text className='highlight'>今日驯化建议</Text></Text>
             <Text className='archive-panel__body'>{result.microAction}</Text>
             <Text className='archive-panel__note'>今日禁止投喂：{result.doNotFeed}</Text>
           </View>
@@ -90,8 +99,12 @@ export default function ResultPage() {
 
       <View className='result-actions'>
         <Button className='secondary-button' onClick={() => Taro.navigateTo({ url: '/pages/share/index?template=daily' })}>生成分享卡</Button>
-        <Button className='primary-button' onClick={() => { addMonster(true); Taro.navigateTo({ url: '/pages/share/index?template=discharge' }) }}>我完成了</Button>
-        <Button className={`secondary-button ${added ? 'is-added' : ''}`} onClick={() => addMonster(false)}>{added ? '已加入' : '加入图鉴'}</Button>
+        {readOnly
+          ? <Button className='primary-button' onClick={() => Taro.reLaunch({ url: '/pages/gallery/index' })}>返回怪兽图鉴</Button>
+          : <>
+              <Button className='primary-button' onClick={() => { addMonster(true); Taro.navigateTo({ url: '/pages/share/index?template=discharge' }) }}>我完成了</Button>
+              <Button disabled={added} className={`secondary-button ${added ? 'is-added' : ''}`} onClick={() => addMonster(false)}>{added ? '已加入' : '加入图鉴'}</Button>
+            </>}
       </View>
     </View>
   )
