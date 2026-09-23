@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
+import { setAgentEntry, consumeAgentEntry } from '../src/services/agentEntry.ts'
 
 import {
   AGENT_RETENTION_MS,
@@ -220,4 +221,15 @@ test('unconsented and safety sessions never qualify for long-term memory', () =>
   assert.equal(shouldPersistCrossSessionArtifacts(session({ memoryEnabled: true, phase: 'safety_handoff', outcome: 'safety' })), false)
   assert.equal(shouldPersistAgentSession(session({ memoryEnabled: false, outcome: undefined, phase: 'clarifying' })), false)
   assert.equal(shouldPersistAgentSession(session({ memoryEnabled: true, outcome: undefined, phase: 'clarifying' })), true)
+})
+
+
+test('desktop input handoff is one-use, bounded and replaces prior input without storage', () => {
+  setAgentEntry('  first draft  ')
+  assert.equal(consumeAgentEntry(), 'first draft')
+  assert.equal(consumeAgentEntry(), '')
+  setAgentEntry('old')
+  setAgentEntry('x'.repeat(250))
+  assert.equal(consumeAgentEntry(), 'x'.repeat(200))
+  assert.equal(consumeAgentEntry(), '')
 })

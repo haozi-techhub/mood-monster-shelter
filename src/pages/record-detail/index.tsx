@@ -9,6 +9,9 @@ import { findMonsterBySlug } from '../../data/monsters'
 import { getAgentRecordDetail } from '../../services/agentStorage'
 import type { AgentRecordDetail, BlockReason, TaskAdjustment } from '../../types/agent'
 import './index.less'
+import { useDesktop } from '../../utils/useDesktop'
+
+const DesktopRecordDetail: typeof import('../../desktop/RecordDetail').DesktopRecordDetail | null = process.env.TARO_ENV === 'h5' ? require('../../desktop/RecordDetail').DesktopRecordDetail : null
 
 const goalLabels: Record<string, string> = {
   work: '工作推进',
@@ -67,6 +70,7 @@ const formatDuration = (seconds: number) => seconds < 60 ? `${seconds} 秒` : `$
 const adjustmentTitle = (adjustment: TaskAdjustment) => adjustment.type === 'rescope' ? '任务自动降阶' : '换一个行动入口'
 
 export default function RecordDetailPage() {
+  const desktop = useDesktop()
   const router = useRouter()
   const sessionId = router.params.sessionId || ''
   const [detail, setDetail] = useState<AgentRecordDetail | null>(() => sessionId ? getAgentRecordDetail(sessionId) : null)
@@ -76,6 +80,8 @@ export default function RecordDetailPage() {
   })
 
   const backToRecords = () => Taro.reLaunch({ url: '/pages/gallery/index' })
+
+  if (desktop && DesktopRecordDetail) return <DesktopRecordDetail detail={detail} />
 
   if (!detail) {
     return (

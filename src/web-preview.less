@@ -1,0 +1,237 @@
+// H5 only. Uppercase PX keeps desktop dimensions out of Taro's design-unit conversion.
+// Mini-program `page` has no H5 DOM counterpart: inherit the same brand tokens here.
+.web-preview-frame {
+  --cream:#fffaf2; --paper:rgba(255,255,255,.88); --ink:#2b1648; --ink-soft:#665873;
+  --lavender:#b197fc; --lavender-deep:#7049cf; --mint:#a5efd2; --sky:#91cdff;
+  --peach:#ffb8c3; --yellow:#ffd881; --line:rgba(72,45,105,.18);
+  --shadow:0 9PX 24PX rgba(96,69,153,.16);
+  color:var(--ink); min-height:100dvh;
+  font:14PX/1.6 -apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif;
+  background:radial-gradient(circle at 88% 22%,rgba(151,244,164,.17),transparent 23%),radial-gradient(circle at 16% 76%,rgba(177,151,252,.2),transparent 28%),linear-gradient(180deg,#fffdf6 0%,#fdf7ff 58%,#f5efff 100%);
+}
+.preview-notice {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12PX;
+  height: 36PX;
+  padding: 0 24PX;
+  color: #76618a;
+  font: 12PX/1.4 -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+  background: rgba(253, 248, 255, 0.96);
+  border-bottom: 1PX solid rgba(133, 97, 177, 0.1);
+  backdrop-filter: blur(12PX);
+}
+
+.preview-notice__identity { display: flex; align-items: center; gap: 8PX; }
+.preview-notice__dot { width: 6PX; height: 6PX; background: #b192dc; border-radius: 50%; }
+.preview-notice__mode { white-space: nowrap; }
+.web-preview-frame { padding-top: 36PX; }
+.web-preview-frame .taro_router { height: calc(100dvh - 36PX); }
+.web-preview-frame .taro_page { min-height: calc(100dvh - 36PX); }
+.web-preview-frame .tab-page-shell,
+.web-preview-frame .tab-page-scroll { height: calc(100dvh - 36PX); }
+.web-preview-frame .page { min-height: calc(100dvh - 36PX); }
+.web-preview-frame .page-header,
+.web-preview-frame .page-header--system-safe {
+  position: relative;
+  height: 48PX;
+  min-height: 48PX;
+  padding: 0;
+  margin: 0 0 16PX;
+}
+.web-preview-frame .page-header .page-header__title {
+  position: static;
+  height: auto;
+  max-width: none;
+  transform: none;
+}
+.web-preview-frame .page-header__side { min-width: 0; }
+.desktop-intro { display: none; }
+.web-preview-frame button { cursor: pointer; }
+.web-preview-frame button:disabled { cursor: not-allowed; }
+.web-preview-frame button:focus-visible,
+.web-preview-frame textarea:focus-visible {
+  outline: 3PX solid #9464cf;
+  outline-offset: 4PX;
+}
+.web-preview-frame textarea { resize: vertical; }
+.web-preview-frame .capture-input:focus-within {
+  border-color: #a777d5;
+  box-shadow: 0 0 0 3PX rgba(177, 151, 252, 0.16);
+}
+
+@media (max-width: 480PX) {
+  .preview-notice { padding: 0 12PX; font-size: 10PX; gap: 6PX; }
+}
+
+@media (min-width: 768PX) {
+  // Existing design units map to stable half-size CSS px, as on a 375px phone.
+  html { font-size: 20PX !important; }
+  .web-preview-frame .page { width: 100%; max-width: 800PX; margin: 0 auto; padding: 16PX 32PX 110PX; }
+  .web-preview-frame .tab-page-scroll { padding-bottom: 0; }
+  .web-preview-frame .tab-page-shell { background: none; }
+  .web-preview-frame .home-top { height: 44PX; padding: 0; margin: 0; }
+  .web-preview-frame .home-hero { max-width: 440PX; margin: 0 auto; }
+  .web-preview-frame .capture-card { margin-top: 0; }
+  .web-preview-frame .tab-page-scroll__spacer { height: 110PX; }
+  .web-preview-frame .bottom-nav {
+    position: fixed;
+    left: 50%;
+    right: auto;
+    bottom: 18PX;
+    width: 500PX;
+    height: 72PX;
+    padding: 5PX 22PX;
+    transform: translateX(-50%);
+    border: 1PX solid rgba(255, 255, 255, 0.96);
+    border-radius: 28PX;
+    box-shadow: 0 12PX 40PX rgba(99, 61, 145, 0.16), inset 0 1PX 0 #fff;
+    backdrop-filter: blur(24PX);
+  }
+  .web-preview-frame .bottom-nav__item { min-height: 56PX; }
+  .web-preview-frame .bottom-nav__capture { width: 64PX; height: 64PX; }
+  .web-preview-frame .bottom-nav__capture-orb { width: 54PX; height: 54PX; }
+  .web-preview-frame .bottom-nav__asset { width: 29PX; height: 29PX; }
+  .web-preview-frame .bottom-nav__label { font-size: 12PX; }
+  .web-preview-frame .primary-button { min-height: 48PX; font-size: 16PX; letter-spacing: 1PX; }
+  .web-preview-frame .secondary-button { min-height: 46PX; font-size: 15PX; }
+  .web-preview-frame .glass-card { border-radius: 24PX; }
+  .web-preview-frame .agent-consent { max-width: 540PX; margin: 70PX auto 30PX; padding: 32PX; }
+  .web-preview-frame .agent-consent__title { font-size: 24PX; }
+  .web-preview-frame .agent-consent__body { font-size: 15PX; }
+  .web-preview-frame .share-page { max-width: 600PX; }
+  .web-preview-frame .result-page,
+  .web-preview-frame .record-detail-page { max-width: 820PX; }
+  .web-preview-frame .discover-locked { max-width: 580PX; margin-left: auto; margin-right: auto; }
+}
+
+@media (min-width: 1024PX) {
+  .web-preview-frame .page { max-width: 1184PX; padding: 24PX 32PX 120PX; }
+  .web-preview-frame .tab-page-scroll { padding-bottom: 0; }
+  .web-preview-frame .home-top { height: 44PX; }
+  .web-preview-frame .my-monsters { height: 36PX; padding: 0 14PX; font-size: 13PX; }
+  .web-preview-frame .my-monsters image { width: 28PX; height: 28PX; }
+  .web-preview-frame .home-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+    align-items: center;
+    gap: 64PX;
+    padding: 16PX 12PX 34PX;
+  }
+  .web-preview-frame .home-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 480PX;
+    max-width: none;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+  .web-preview-frame .brand-lockup { width: 310PX; }
+  .web-preview-frame .brand-lockup__art { width: 310PX; }
+  .web-preview-frame .brand-lockup__tagline { margin-top: -8PX; font-size: 13PX; letter-spacing: 1PX; }
+  .web-preview-frame .home-guide-wrap { position: relative; top: auto; right: auto; width: 300PX; height: 270PX; margin-top: 6PX; }
+  .web-preview-frame .home-guide { width: 270PX; height: 270PX; right: -14PX; }
+  .web-preview-frame .guide-glow { width: 230PX; right: 0; height: 50PX; bottom: 4PX; }
+  .web-preview-frame .guide-speech { bottom: 45PX; left: -88PX; min-width: 158PX; padding: 14PX 17PX; border-radius: 20PX 20PX 6PX; }
+  .web-preview-frame .guide-speech__copy { font-size: 13PX; line-height: 1.6; }
+  .web-preview-frame .guide-speech__heart { font-size: 21PX; bottom: -11PX; }
+  .web-preview-frame .home-entry { min-width: 0; padding: 16PX 0; }
+  .web-preview-frame .desktop-intro { display: flex; flex-direction: column; gap: 14PX; margin: 0 0 26PX; }
+  .desktop-intro__eyebrow { color: #a17cbb; font-size: 11PX; font-weight: 700; letter-spacing: 3PX; }
+  .desktop-intro__title { color: #3f235b; font-size: 32PX; font-weight: 750; letter-spacing: 1PX; line-height: 1.55; }
+  .desktop-intro__title text { display: block; }
+  .desktop-intro__body { color: #897394; font-size: 14PX; line-height: 1.8; }
+  .web-preview-frame .capture-card { padding: 26PX; margin: 0; }
+  .web-preview-frame .capture-card__title { padding: 0 0 16PX; font-size: 18PX; }
+  .web-preview-frame .capture-input { height: 120PX; padding: 15PX; border-radius: 17PX; }
+  .web-preview-frame .capture-input textarea { height: 74PX; font-size: 15PX; line-height: 1.7; }
+  .web-preview-frame .capture-input__count { font-size: 11PX; bottom: 10PX; right: 14PX; }
+  .web-preview-frame .quick-inputs { gap: 8PX; flex-wrap: wrap; margin: 16PX 0 20PX; overflow: visible; }
+  .web-preview-frame .quick-chip { height: 32PX; font-size: 12PX; padding: 0 12PX; }
+  .web-preview-frame .capture-button { min-height: 56PX; font-size: 19PX; letter-spacing: 4PX; }
+  .web-preview-frame .privacy-note { font-size: 11PX; margin-top: 14PX; color: #8e7b9b; }
+  .web-preview-frame .active-agent-card { margin: 0 0 16PX; padding: 14PX 18PX; }
+  .web-preview-frame .active-agent-card__title { font-size: 15PX; }
+  .web-preview-frame .safety-card { margin: 0; }
+  .web-preview-frame .hot-section { padding: 22PX 28PX 24PX; margin: 0 12PX; }
+  .web-preview-frame .hot-section .section-title { margin-bottom: 18PX; font-size: 18PX; }
+  .web-preview-frame .hot-section__refresh { font-size: 12PX; color: #927ca2; }
+  .web-preview-frame .hot-grid { gap: 18PX; }
+  .web-preview-frame .monster-mini { padding: 10PX 12PX 14PX; border-radius: 18PX; }
+  .web-preview-frame .monster-mini__image { width: 108PX; height: 108PX; }
+  .web-preview-frame .monster-mini__name { font-size: 14PX; }
+
+  .web-preview-frame .page-header { margin-bottom: 24PX; }
+  .web-preview-frame .page-header__title { color: #715287; font-size: 16PX; letter-spacing: 2PX; }
+  .web-preview-frame .agent-page { max-width: 1120PX; }
+  .web-preview-frame .agent-guide { padding: 18PX 26PX; min-height: 120PX; gap: 20PX; }
+  .web-preview-frame .agent-guide image { width: 100PX; height: 100PX; flex-shrink: 0; }
+  .web-preview-frame .agent-guide__title { font-size: 25PX; font-weight: 750; }
+  .web-preview-frame .agent-guide__role { font-size: 12PX; }
+  .web-preview-frame .agent-guide__meta { font-size: 14PX; }
+  .web-preview-frame .agent-workspace { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; gap: 28PX; margin-top: 26PX; }
+  .web-preview-frame .agent-thread { padding: 0; gap: 18PX; }
+  .web-preview-frame .agent-bubble { font-size: 15PX; padding: 16PX 20PX; max-width: 92%; overflow-wrap: anywhere; }
+  .web-preview-frame .agent-bubble__name { font-size: 11PX; margin-bottom: 6PX; }
+  .web-preview-frame .agent-workspace__action { min-width: 0; }
+  .web-preview-frame .agent-task-card,
+  .web-preview-frame .agent-input-card,
+  .web-preview-frame .agent-timer,
+  .web-preview-frame .agent-checkin,
+  .web-preview-frame .agent-complete,
+  .web-preview-frame .agent-safety { padding: 26PX; gap: 18PX; }
+  .web-preview-frame .agent-task-card__title,
+  .web-preview-frame .agent-checkin__title,
+  .web-preview-frame .agent-complete__title { font-size: 23PX; font-weight: 750; line-height: 1.5; }
+  .web-preview-frame .agent-task-card__reason,
+  .web-preview-frame .agent-timer__task,
+  .web-preview-frame .agent-checkin__body,
+  .web-preview-frame .agent-complete__body { font-size: 14PX; line-height: 1.75; }
+  .web-preview-frame .agent-task-card__step,
+  .web-preview-frame .agent-task-card__done { font-size: 15PX; padding: 16PX; line-height: 1.65; }
+  .web-preview-frame .agent-input-card textarea { margin-top: 20PX; min-height: 115PX; font-size: 15PX; padding: 16PX; }
+  .web-preview-frame .agent-options { gap: 10PX; }
+  .web-preview-frame .agent-options button { font-size: 13PX; padding: 10PX 14PX; }
+  .web-preview-frame .agent-monster-card { padding: 18PX; gap: 18PX; margin-bottom: 18PX; }
+  .web-preview-frame .agent-monster-card__photo { width: 88PX; height: 88PX; flex-shrink: 0; }
+  .web-preview-frame .agent-monster-card__photo image { width: 84PX; height: 84PX; }
+  .web-preview-frame .agent-monster-card__name { font-size: 20PX; }
+  .web-preview-frame .agent-timer__clock { font-size: 76PX; font-variant-numeric: tabular-nums; }
+  .web-preview-frame .agent-complete image { width: 150PX; height: 150PX; }
+  .web-preview-frame .agent-workspace--safety { grid-template-columns: 1fr; max-width: 640PX; margin-left: auto; margin-right: auto; }
+
+  .web-preview-frame .gallery-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18PX; }
+  .web-preview-frame .gallery-heading { margin: 12PX 0 28PX; }
+  .web-preview-frame .gallery-summary { padding: 22PX 28PX; }
+  .web-preview-frame .gallery-actions { margin-top: 22PX; }
+  .web-preview-frame .dominant-card { max-width: 700PX; margin-left: auto; margin-right: auto; }
+  .web-preview-frame .profile-page,
+  .web-preview-frame .discover-page { max-width: 880PX; }
+  .web-preview-frame .profile-hero { padding: 24PX; }
+  .web-preview-frame .profile-section { padding: 24PX; margin-top: 20PX; }
+  .web-preview-frame .share-page { max-width: 640PX; }
+  .web-preview-frame .result-page,
+  .web-preview-frame .record-detail-page { max-width: 820PX; }
+}
+
+@media (hover: hover) {
+  .web-preview-frame button:not(:disabled):hover { filter: brightness(1.035); }
+  .web-preview-frame .quick-chip:hover,
+  .web-preview-frame .agent-options button:hover { box-shadow: 0 3PX 12PX rgba(120, 80, 170, 0.13); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .web-preview-frame *, .web-preview-frame *::before, .web-preview-frame *::after { animation: none !important; transition: none !important; }
+}
+
+// Scope mobile H5 compatibility fixes to the existing Taro controls.
+html,body { overflow-x:clip; }
+.web-preview-frame .page::before,.web-preview-frame .page::after { display:none; }
+.web-preview-frame .bottom-nav__item,.web-preview-frame .bottom-nav__capture { background:transparent; }
+.web-preview-frame .bottom-nav__item::after,.web-preview-frame .bottom-nav__capture::after { border:0; }

@@ -1,0 +1,22 @@
+{
+  "title": "清空本地收容记录？",
+  "text": "清空本地收容记录？×完整对话、行动记录、怪兽图鉴、分享草稿和本地指标会一起删除，无法撤销。清空后保留当前记忆开关设置。取消，保留数据确认清空",
+  "before": {
+    "mms:agent-active:v1": "string",
+    "mms:agent-share-drafts:v1": 1,
+    "mms:agent-consent:v1": 3,
+    "mms:agent-events:v1": 6,
+    "mms:agent-sessions:v1": 0,
+    "mms:agent-memory:v1": 0
+  },
+  "after": {
+    "mms:agent-active:v1": "string",
+    "mms:agent-share-drafts:v1": 1,
+    "mms:agent-consent:v1": 3,
+    "mms:agent-events:v1": 6,
+    "mms:agent-sessions:v1": 0,
+    "mms:agent-memory:v1": 0
+  },
+  "closed": true,
+  "focus": "清空本地数据"
+}

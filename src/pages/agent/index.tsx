@@ -27,6 +27,8 @@ import {
 import { trackAgentEvent } from '../../services/analytics'
 import { addToGallery, saveLatestAnalysis } from '../../services/storage'
 import { isHighRiskInput, safetyMessage } from '../../utils/safety'
+import { useDesktop } from '../../utils/useDesktop'
+import { consumeAgentEntry } from '../../services/agentEntry'
 import type {
   AgentConsent,
   AgentSession,
@@ -36,6 +38,8 @@ import type {
   TaskAdjustmentReason,
 } from '../../types/agent'
 import './index.less'
+
+const DesktopAgent: typeof import('../../desktop/Agent').DesktopAgent | null = process.env.TARO_ENV === 'h5' ? require('../../desktop/Agent').DesktopAgent : null
 
 const phaseLabels: Partial<Record<AgentSession['phase'], string>> = {
   intake: '正在听你说',
@@ -64,8 +68,9 @@ const formatTime = (seconds: number) => {
 const formatDurationLabel = (seconds: number) => seconds < 60 ? `${seconds} 秒` : `${Math.ceil(seconds / 60)} 分钟`
 
 export default function AgentPage() {
+  const desktop = useDesktop()
   const router = useRouter()
-  const initialText = useMemo(() => decodeParam(router.params.text || '').trim().slice(0, 200), [router.params.text])
+  const initialText = useMemo(() => (process.env.TARO_ENV === 'h5' ? consumeAgentEntry() || decodeParam(router.params.text || '') : decodeParam(router.params.text || '')).trim().slice(0, 200), [router.params.text])
   const [consent, setConsentState] = useState<AgentConsent | null>(() => getAgentConsent())
   const [session, setSession] = useState<AgentSession | null>(null)
   const [draft, setDraft] = useState('')
@@ -315,10 +320,12 @@ export default function AgentPage() {
   const action = session?.action
   const monster = session?.monsterSlug ? findMonsterBySlug(session.monsterSlug) : null
 
+  if (desktop && DesktopAgent) return <DesktopAgent consent={consent} session={session} busy={busy} draft={draft} remainingSeconds={remainingSeconds} onDraft={setDraft} onConsent={decideConsent} onSubmit={submit} onStart={startTask} onCheckin={() => session && persist({ ...session, phase: 'checkin', timerEndsAt: undefined, updatedAt: Date.now() })} onRescope={rescope} onAlternative={chooseAlternative} onFinish={(outcome, helpfulness) => { if (outcome === 'completed') trackAgentEvent('checkin_result', { result: 'completed' }); finish(outcome, helpfulness) }} onContinueCare={continueAfterCare} />
+
   return (
     <View className='page agent-page'>
       <Decorations />
-      <PageHeader title='行动收容室' showShare={false} />
+      <PageHeader title='行动收容室' showShare={false} systemSafe />
 
       {!consent ? (
         <View className='agent-consent glass-card'>
@@ -341,7 +348,8 @@ export default function AgentPage() {
             </View>
           </View>
 
-          <View className='agent-thread'>
+          <View className={`agent-workspace ${session?.phase === 'safety_handoff' ? 'agent-workspace--safety' : ''}`}>
+          <View className='agent-thread' aria-live='polite'>
             {session?.turns.map((turn) => (
               <View key={turn.id} className={`agent-bubble agent-bubble--${turn.role}`}>
                 {turn.role === 'assistant' && <Text className='agent-bubble__name'>收容员</Text>}
@@ -351,6 +359,7 @@ export default function AgentPage() {
             {busy && <View className='agent-bubble agent-bubble--assistant agent-bubble--typing'><Text>正在翻找行动钥匙</Text><Text>•••</Text></View>}
           </View>
 
+          <View className='agent-workspace__action'>
           {session?.phase === 'safety_handoff' && session.safety && (
             <View className='agent-safety glass-card'>
               <Text className='agent-safety__mark'>♡</Text>
@@ -367,6 +376,7 @@ export default function AgentPage() {
                 {action.options.map((option) => <Button key={option} onClick={() => submit(option)}>{option}</Button>)}
               </View>
               <Textarea
+                ariaLabel='回复收容员'
                 maxlength={200}
                 value={draft}
                 placeholder='也可以用自己的话告诉收容员…'
@@ -458,6 +468,8 @@ export default function AgentPage() {
               <Button className='agent-complete__home' onClick={() => Taro.reLaunch({ url: '/pages/index/index' })}>回到首页</Button>
             </View>
           )}
+          </View>
+          </View>
         </>
       )}
     </View>

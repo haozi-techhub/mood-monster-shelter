@@ -1,5 +1,5 @@
 import { Button, Image, Text, View } from '@tarojs/components'
-import Taro, { useDidShow, useShareAppMessage } from '@tarojs/taro'
+import Taro, { useDidShow, useShareAppMessage, useRouter } from '@tarojs/taro'
 import { useMemo, useState } from 'react'
 
 import shelterGuide from '../../assets/monsters/shelter-guide.png'
@@ -11,6 +11,9 @@ import { getMemorySummaries, getWeeklyAgentStats } from '../../services/agentSto
 import { getGalleryRecords, saveLatestAnalysis, type GalleryRecord } from '../../services/storage'
 import type { MemorySummary, WeeklyAgentStats } from '../../types/agent'
 import './index.less'
+import { useDesktop } from '../../utils/useDesktop'
+
+const DesktopRecords: typeof import('../../desktop/Records').DesktopRecords | null = process.env.TARO_ENV === 'h5' ? require('../../desktop/Records').DesktopRecords : null
 
 const formatDate = (timestamp: number) => {
   const date = new Date(timestamp)
@@ -26,6 +29,8 @@ const monsterTypeClass = {
 const formatDuration = (seconds: number) => seconds < 60 ? `${seconds} 秒` : `${Math.ceil(seconds / 60)} 分钟`
 
 export default function GalleryPage() {
+  const desktop = useDesktop()
+  const router = useRouter()
   const [records, setRecords] = useState<GalleryRecord[]>(() => getGalleryRecords())
   const [actions, setActions] = useState<MemorySummary[]>(() => getMemorySummaries())
   const [weeklyStats, setWeeklyStats] = useState<WeeklyAgentStats>(() => getWeeklyAgentStats())
@@ -58,6 +63,8 @@ export default function GalleryPage() {
   const openActionRecord = (sessionId: string) => {
     Taro.navigateTo({ url: `/pages/record-detail/index?sessionId=${encodeURIComponent(sessionId)}` })
   }
+
+  if (desktop && DesktopRecords) return <DesktopRecords records={records} actions={actions} weekly={weeklyStats} initialCatalog={router.params.view === 'catalog'} onOpenAction={openActionRecord} />
 
   return (
     <TabPageLayout active='records' className='gallery-page'>
@@ -122,7 +129,7 @@ export default function GalleryPage() {
         {monsters.map((monster) => {
           const record = recordMap.get(monster.slug)
           return (
-            <Button key={monster.id} className={`gallery-item ${record ? '' : 'gallery-item--locked'}`} onClick={() => openRecord(monster.slug)}>
+            <Button key={monster.id} className={`gallery-item ${record ? '' : 'gallery-item--preview'}`} onClick={() => openRecord(monster.slug)}>
               <Image src={monster.image} mode='aspectFit' />
               {record ? (
                 <View className='gallery-item__copy'>
@@ -132,7 +139,11 @@ export default function GalleryPage() {
                   <Text>上次见：{formatDate(record.capturedAt)}</Text>
                 </View>
               ) : (
-                <View className='gallery-item__locked-copy'><Text>▣</Text><Text>等待收容</Text></View>
+                <View className='gallery-item__copy gallery-item__preview-copy'>
+                  <Text className='gallery-item__name'>{monster.monsterName}</Text>
+                  <Text className={`gallery-item__tag gallery-item__tag--${monsterTypeClass[monster.monsterType]}`}>{monster.monsterType}</Text>
+                  <Text className='gallery-item__preview-status'>待收容 · 尚未相遇</Text>
+                </View>
               )}
             </Button>
           )

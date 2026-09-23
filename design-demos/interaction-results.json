@@ -1,0 +1,287 @@
+[
+  {
+    "label": "a-orbit.html fixed task",
+    "dialog": true,
+    "title": "先留下一个不完美的标题",
+    "text": "先留下一个不完美的标题\n\n固定示例 · 写作品集 · 2 分钟\n\n第一步\n打开文档，只写一个标题。\n\n完成标准：文档里留下了一个看得见的标题。\n\n这张卡只演示布局与计时，不分析你的输入，也不会保存为真实记录。\n\n开始示例计时 →\n再小一点\n先不开始",
+    "active": "close-modal",
+    "tab": "home",
+    "errors": []
+  },
+  {
+    "label": "a-orbit.html smaller",
+    "dialog": true,
+    "title": "先留下一个不完美的标题",
+    "text": "先留下一个不完美的标题\n\n固定示例 · 写作品集 · 30 秒\n\n第一步\n打开文档，只写一个标题。\n\n完成标准：文档里留下了一个看得见的标题。\n\n这张卡只演示布局与计时，不分析你的输入，也不会保存为真实记录。\n\n开始示例计时 →\n再小一点\n先不开始",
+    "active": "start-timer",
+    "tab": "home",
+    "errors": []
+  },
+  {
+    "label": "a-orbit.html timer",
+    "initial": "00:30",
+    "ticked": "00:29"
+  },
+  {
+    "label": "a-orbit.html finish",
+    "dialog": true,
+    "title": "一点点，也算往前。",
+    "text": "一点点，也算往前。\n\n你已看完这次行动样式演示。正式版本会在你确认完成标准后，按授权记录这一步。\n\n本次为设计示例，未产生真实收容记录。\n回到我的小空间 →",
+    "active": "done",
+    "tab": "home",
+    "errors": []
+  },
+  {
+    "label": "a-orbit.html close",
+    "dialog": false,
+    "title": "一点点，也算往前。",
+    "text": "一点点，也算往前。你已看完这次行动样式演示。正式版本会在你确认完成标准后，按授权记录这一步。本次为设计示例，未产生真实收容记录。回到我的小空间 →",
+    "active": "",
+    "tab": "home",
+    "errors": []
+  },
+  {
+    "label": "a-orbit.html monster detail",
+    "dialog": true,
+    "title": "焦虑转圈怪",
+    "text": "焦虑转圈怪\n\n混合类 ·「我好慌，但我动不了。」\n\n大脑同时踩着油门和刹车。\n\n可以试试\n写下最担心的一件事，再写一个五分钟内能做的动作。",
+    "active": "close-modal",
+    "tab": "records",
+    "errors": []
+  },
+  {
+    "label": "a-orbit.html escape close",
+    "dialog": false,
+    "title": "焦虑转圈怪",
+    "text": "焦虑转圈怪混合类 ·「我好慌，但我动不了。」大脑同时踩着油门和刹车。可以试试写下最担心的一件事，再写一个五分钟内能做的动作。",
+    "active": "",
+    "tab": "records",
+    "errors": []
+  },
+  {
+    "label": "a-orbit.html discover",
+    "dialog": false,
+    "title": "焦虑转圈怪",
+    "text": "焦虑转圈怪混合类 ·「我好慌，但我动不了。」大脑同时踩着油门和刹车。可以试试写下最担心的一件事，再写一个五分钟内能做的动作。",
+    "active": "tab-discover",
+    "tab": "discover",
+    "errors": []
+  },
+  {
+    "label": "a-orbit.html privacy",
+    "dialog": true,
+    "title": "只看设计，不留下数据。",
+    "text": "只看设计，不留下数据。\n\n本页不调用网络或模型，不读取其他页面的记录，也不会把输入写入本地存储。\n\n关闭或刷新页面后，演示中的输入、开关和计时状态都会消失。",
+    "active": "close-modal",
+    "tab": "profile",
+    "errors": []
+  },
+  {
+    "label": "a-orbit.html keyboard tab",
+    "dialog": false,
+    "title": "只看设计，不留下数据。",
+    "text": "只看设计，不留下数据。本页不调用网络或模型，不读取其他页面的记录，也不会把输入写入本地存储。关闭或刷新页面后，演示中的输入、开关和计时状态都会消失。",
+    "active": "tab-records",
+    "tab": "records",
+    "errors": []
+  },
+  {
+    "label": "a-orbit.html safety",
+    "dialog": true,
+    "title": "先照顾好此刻的安全",
+    "text": "先照顾好此刻的安全\n\n听起来你正在承受很大的痛苦。请先联系身边可信任的人，让对方陪着你。\n\n如果你可能马上伤害自己，请联系当地紧急服务，或请身边的人协助寻求专业帮助。\n\n这里暂时停止怪兽和行动演示。",
+    "active": "close-modal",
+    "tab": "home",
+    "errors": []
+  },
+  {
+    "label": "b-studio.html fixed task",
+    "dialog": true,
+    "title": "先留下一个不完美的标题",
+    "text": "先留下一个不完美的标题\n\n固定示例 · 写作品集 · 2 分钟\n\n第一步\n打开文档，只写一个标题。\n\n完成标准：文档里留下了一个看得见的标题。\n\n这张卡只演示布局与计时，不分析你的输入，也不会保存为真实记录。\n\n开始示例计时 →\n再小一点\n先不开始",
+    "active": "close-modal",
+    "tab": "home",
+    "errors": []
+  },
+  {
+    "label": "b-studio.html smaller",
+    "dialog": true,
+    "title": "先留下一个不完美的标题",
+    "text": "先留下一个不完美的标题\n\n固定示例 · 写作品集 · 30 秒\n\n第一步\n打开文档，只写一个标题。\n\n完成标准：文档里留下了一个看得见的标题。\n\n这张卡只演示布局与计时，不分析你的输入，也不会保存为真实记录。\n\n开始示例计时 →\n再小一点\n先不开始",
+    "active": "start-timer",
+    "tab": "home",
+    "errors": []
+  },
+  {
+    "label": "b-studio.html timer",
+    "initial": "00:30",
+    "ticked": "00:29"
+  },
+  {
+    "label": "b-studio.html finish",
+    "dialog": true,
+    "title": "一点点，也算往前。",
+    "text": "一点点，也算往前。\n\n你已看完这次行动样式演示。正式版本会在你确认完成标准后，按授权记录这一步。\n\n本次为设计示例，未产生真实收容记录。\n回到我的小空间 →",
+    "active": "done",
+    "tab": "home",
+    "errors": []
+  },
+  {
+    "label": "b-studio.html close",
+    "dialog": false,
+    "title": "一点点，也算往前。",
+    "text": "一点点，也算往前。你已看完这次行动样式演示。正式版本会在你确认完成标准后，按授权记录这一步。本次为设计示例，未产生真实收容记录。回到我的小空间 →",
+    "active": "",
+    "tab": "home",
+    "errors": []
+  },
+  {
+    "label": "b-studio.html monster detail",
+    "dialog": true,
+    "title": "焦虑转圈怪",
+    "text": "焦虑转圈怪\n\n混合类 ·「我好慌，但我动不了。」\n\n大脑同时踩着油门和刹车。\n\n可以试试\n写下最担心的一件事，再写一个五分钟内能做的动作。",
+    "active": "close-modal",
+    "tab": "records",
+    "errors": []
+  },
+  {
+    "label": "b-studio.html escape close",
+    "dialog": false,
+    "title": "焦虑转圈怪",
+    "text": "焦虑转圈怪混合类 ·「我好慌，但我动不了。」大脑同时踩着油门和刹车。可以试试写下最担心的一件事，再写一个五分钟内能做的动作。",
+    "active": "",
+    "tab": "records",
+    "errors": []
+  },
+  {
+    "label": "b-studio.html discover",
+    "dialog": false,
+    "title": "焦虑转圈怪",
+    "text": "焦虑转圈怪混合类 ·「我好慌，但我动不了。」大脑同时踩着油门和刹车。可以试试写下最担心的一件事，再写一个五分钟内能做的动作。",
+    "active": "tab-discover",
+    "tab": "discover",
+    "errors": []
+  },
+  {
+    "label": "b-studio.html privacy",
+    "dialog": true,
+    "title": "只看设计，不留下数据。",
+    "text": "只看设计，不留下数据。\n\n本页不调用网络或模型，不读取其他页面的记录，也不会把输入写入本地存储。\n\n关闭或刷新页面后，演示中的输入、开关和计时状态都会消失。",
+    "active": "close-modal",
+    "tab": "profile",
+    "errors": []
+  },
+  {
+    "label": "b-studio.html keyboard tab",
+    "dialog": false,
+    "title": "只看设计，不留下数据。",
+    "text": "只看设计，不留下数据。本页不调用网络或模型，不读取其他页面的记录，也不会把输入写入本地存储。关闭或刷新页面后，演示中的输入、开关和计时状态都会消失。",
+    "active": "tab-records",
+    "tab": "records",
+    "errors": []
+  },
+  {
+    "label": "b-studio.html safety",
+    "dialog": true,
+    "title": "先照顾好此刻的安全",
+    "text": "先照顾好此刻的安全\n\n听起来你正在承受很大的痛苦。请先联系身边可信任的人，让对方陪着你。\n\n如果你可能马上伤害自己，请联系当地紧急服务，或请身边的人协助寻求专业帮助。\n\n这里暂时停止怪兽和行动演示。",
+    "active": "close-modal",
+    "tab": "home",
+    "errors": []
+  },
+  {
+    "label": "c-quiet.html fixed task",
+    "dialog": true,
+    "title": "先留下一个不完美的标题",
+    "text": "先留下一个不完美的标题\n\n固定示例 · 写作品集 · 2 分钟\n\n第一步\n打开文档，只写一个标题。\n\n完成标准：文档里留下了一个看得见的标题。\n\n这张卡只演示布局与计时，不分析你的输入，也不会保存为真实记录。\n\n开始示例计时 →\n再小一点\n先不开始",
+    "active": "close-modal",
+    "tab": "home",
+    "errors": []
+  },
+  {
+    "label": "c-quiet.html smaller",
+    "dialog": true,
+    "title": "先留下一个不完美的标题",
+    "text": "先留下一个不完美的标题\n\n固定示例 · 写作品集 · 30 秒\n\n第一步\n打开文档，只写一个标题。\n\n完成标准：文档里留下了一个看得见的标题。\n\n这张卡只演示布局与计时，不分析你的输入，也不会保存为真实记录。\n\n开始示例计时 →\n再小一点\n先不开始",
+    "active": "start-timer",
+    "tab": "home",
+    "errors": []
+  },
+  {
+    "label": "c-quiet.html timer",
+    "initial": "00:30",
+    "ticked": "00:29"
+  },
+  {
+    "label": "c-quiet.html finish",
+    "dialog": true,
+    "title": "一点点，也算往前。",
+    "text": "一点点，也算往前。\n\n你已看完这次行动样式演示。正式版本会在你确认完成标准后，按授权记录这一步。\n\n本次为设计示例，未产生真实收容记录。\n回到我的小空间 →",
+    "active": "done",
+    "tab": "home",
+    "errors": []
+  },
+  {
+    "label": "c-quiet.html close",
+    "dialog": false,
+    "title": "一点点，也算往前。",
+    "text": "一点点，也算往前。你已看完这次行动样式演示。正式版本会在你确认完成标准后，按授权记录这一步。本次为设计示例，未产生真实收容记录。回到我的小空间 →",
+    "active": "",
+    "tab": "home",
+    "errors": []
+  },
+  {
+    "label": "c-quiet.html monster detail",
+    "dialog": true,
+    "title": "焦虑转圈怪",
+    "text": "焦虑转圈怪\n\n混合类 ·「我好慌，但我动不了。」\n\n大脑同时踩着油门和刹车。\n\n可以试试\n写下最担心的一件事，再写一个五分钟内能做的动作。",
+    "active": "close-modal",
+    "tab": "records",
+    "errors": []
+  },
+  {
+    "label": "c-quiet.html escape close",
+    "dialog": false,
+    "title": "焦虑转圈怪",
+    "text": "焦虑转圈怪混合类 ·「我好慌，但我动不了。」大脑同时踩着油门和刹车。可以试试写下最担心的一件事，再写一个五分钟内能做的动作。",
+    "active": "",
+    "tab": "records",
+    "errors": []
+  },
+  {
+    "label": "c-quiet.html discover",
+    "dialog": false,
+    "title": "焦虑转圈怪",
+    "text": "焦虑转圈怪混合类 ·「我好慌，但我动不了。」大脑同时踩着油门和刹车。可以试试写下最担心的一件事，再写一个五分钟内能做的动作。",
+    "active": "tab-discover",
+    "tab": "discover",
+    "errors": []
+  },
+  {
+    "label": "c-quiet.html privacy",
+    "dialog": true,
+    "title": "只看设计，不留下数据。",
+    "text": "只看设计，不留下数据。\n\n本页不调用网络或模型，不读取其他页面的记录，也不会把输入写入本地存储。\n\n关闭或刷新页面后，演示中的输入、开关和计时状态都会消失。",
+    "active": "close-modal",
+    "tab": "profile",
+    "errors": []
+  },
+  {
+    "label": "c-quiet.html keyboard tab",
+    "dialog": false,
+    "title": "只看设计，不留下数据。",
+    "text": "只看设计，不留下数据。本页不调用网络或模型，不读取其他页面的记录，也不会把输入写入本地存储。关闭或刷新页面后，演示中的输入、开关和计时状态都会消失。",
+    "active": "tab-records",
+    "tab": "records",
+    "errors": []
+  },
+  {
+    "label": "c-quiet.html safety",
+    "dialog": true,
+    "title": "先照顾好此刻的安全",
+    "text": "先照顾好此刻的安全\n\n听起来你正在承受很大的痛苦。请先联系身边可信任的人，让对方陪着你。\n\n如果你可能马上伤害自己，请联系当地紧急服务，或请身边的人协助寻求专业帮助。\n\n这里暂时停止怪兽和行动演示。",
+    "active": "close-modal",
+    "tab": "home",
+    "errors": []
+  }
+]

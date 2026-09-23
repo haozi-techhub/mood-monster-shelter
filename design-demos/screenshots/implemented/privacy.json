@@ -1,0 +1,46 @@
+{
+  "before": {
+    "mms:agent-sessions:v1": {
+      "kind": "array",
+      "size": 0
+    },
+    "mms:agent-share-drafts:v1": {
+      "kind": "object",
+      "size": 0
+    },
+    "mms:agent-memory:v1": {
+      "kind": "array",
+      "size": 0
+    }
+  },
+  "start": "05:00",
+  "timer": "04:58",
+  "complete": "行动已完成留下一个与“写作品集”有关、能够看见的结果。未保存对话或长期记录；分享草稿仅暂存 30 分钟。生成出院证明 ↗再收容一只回到收容室",
+  "after": {
+    "mms:agent-active:v1": {
+      "kind": "string",
+      "size": null
+    },
+    "mms:agent-share-drafts:v1": {
+      "kind": "object",
+      "size": 1
+    },
+    "mms:agent-consent:v1": {
+      "kind": "object",
+      "size": 3,
+      "granted": false
+    },
+    "mms:agent-events:v1": {
+      "kind": "array",
+      "size": 6
+    },
+    "mms:agent-sessions:v1": {
+      "kind": "array",
+      "size": 0
+    },
+    "mms:agent-memory:v1": {
+      "kind": "array",
+      "size": 0
+    }
+  }
+}

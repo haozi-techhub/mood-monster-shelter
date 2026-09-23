@@ -2,6 +2,7 @@ import Taro from '@tarojs/taro'
 
 import { defaultMonster, monsters } from '../data/monsters'
 import { isHighRiskInput, safetyMessage } from '../utils/safety'
+import { isCloudEnabled } from '../utils/runtime'
 import type { AnalysisResult } from './storage'
 
 const normalize = (value: string) => value.toLowerCase().replace(/\s+/g, '')
@@ -21,7 +22,7 @@ const pickMonster = (inputText: string) => {
 const wait = (duration: number) => new Promise((resolve) => setTimeout(resolve, duration))
 
 export const analyzeMood = async (inputText: string): Promise<AnalysisResult> => {
-  if (process.env.TARO_APP_USE_CLOUD === 'true') {
+  if (isCloudEnabled) {
     const cloud = (Taro as typeof Taro & {
       cloud?: { callFunction: (options: { name: string; data: unknown }) => Promise<{ result: unknown }> }
     }).cloud

@@ -1,5 +1,5 @@
 import { Button, Image, Text, Textarea, View } from '@tarojs/components'
-import Taro, { useDidShow, useShareAppMessage } from '@tarojs/taro'
+import Taro, { useDidShow, useResize, useShareAppMessage } from '@tarojs/taro'
 import { useState, type CSSProperties } from 'react'
 
 import shelterGuide from '../../assets/monsters/shelter-guide.png'
@@ -11,7 +11,12 @@ import { featuredMonsters } from '../../data/monsters'
 import { getActiveAgentSession } from '../../services/agentStorage'
 import type { AgentSession } from '../../types/agent'
 import { isHighRiskInput, safetyMessage } from '../../utils/safety'
+import { isWebPreview } from '../../utils/runtime'
+import { useDesktop } from '../../utils/useDesktop'
+import { setAgentEntry } from '../../services/agentEntry'
 import './index.less'
+
+const DesktopHome: typeof import('../../desktop/Home').DesktopHome | null = process.env.TARO_ENV === 'h5' ? require('../../desktop/Home').DesktopHome : null
 
 const quickInputs = [
   { label: '我没时间', icon: '◌' },
@@ -37,18 +42,18 @@ const getHomeViewport = (): HomeViewport => {
 
   try {
     const windowInfo = Taro.getWindowInfo()
-    const menuButton = Taro.getMenuButtonBoundingClientRect?.()
-    const statusBarHeight = windowInfo.statusBarHeight || 20
+    const menuButton = isWebPreview ? undefined : Taro.getMenuButtonBoundingClientRect?.()
+    const statusBarHeight = isWebPreview ? 0 : windowInfo.statusBarHeight || 20
     const navBarHeight = menuButton?.height
       ? Math.max(40, (menuButton.top - statusBarHeight) * 2 + menuButton.height)
-      : 44
+      : isWebPreview ? 48 : 44
     const menuSafeRight = menuButton?.left
       ? Math.max(12, windowInfo.windowWidth - menuButton.left + 8)
       : 12
     const viewportRatio = windowInfo.windowHeight / windowInfo.windowWidth
     const classNames = [
       windowInfo.windowWidth <= 360 ? 'home-page--narrow' : '',
-      windowInfo.windowHeight <= 760 || viewportRatio <= 1.9 ? 'home-page--compact' : '',
+      windowInfo.windowWidth < 768 && (windowInfo.windowHeight <= 760 || viewportRatio <= 1.9) ? 'home-page--compact' : '',
     ].filter(Boolean)
 
     return {
@@ -65,6 +70,7 @@ const getHomeViewport = (): HomeViewport => {
 }
 
 export default function IndexPage() {
+  const desktop = useDesktop()
   const [inputText, setInputText] = useState('')
   const [showSafety, setShowSafety] = useState(false)
   const [activeSession, setActiveSession] = useState<AgentSession | null>(() => getActiveAgentSession())
@@ -74,6 +80,7 @@ export default function IndexPage() {
     setActiveSession(getActiveAgentSession())
     setViewport(getHomeViewport())
   })
+  useResize(() => setViewport(getHomeViewport()))
 
   useShareAppMessage(() => ({
     title: '今天是哪只心情怪兽跑出来了？',
@@ -90,8 +97,13 @@ export default function IndexPage() {
       setShowSafety(true)
       return
     }
-    Taro.navigateTo({ url: `/pages/agent/index?text=${encodeURIComponent(value)}` })
+    if (isWebPreview) {
+      setAgentEntry(value)
+      Taro.navigateTo({ url: '/pages/agent/index' })
+    } else Taro.navigateTo({ url: `/pages/agent/index?text=${encodeURIComponent(value)}` })
   }
+
+  if (desktop && DesktopHome) return <DesktopHome value={inputText} onChange={setInputText} onStart={startCapture} activeSession={activeSession} safety={showSafety} onDismissSafety={() => setShowSafety(false)} />
 
   return (
     <TabPageLayout active='home' className={`home-page ${viewport.className}`} style={viewport.style}>
@@ -104,6 +116,7 @@ export default function IndexPage() {
         </Button>
       </View>
 
+      <View className='home-layout'>
       <View className='home-hero'>
         <BrandLockup />
         <View className='home-guide-wrap'>
@@ -119,6 +132,8 @@ export default function IndexPage() {
         </View>
       </View>
 
+      <View className='home-entry'>
+      {isWebPreview && <View className='desktop-intro'><Text className='desktop-intro__eyebrow'>YOUR LITTLE SAFE SPACE</Text><Text className='desktop-intro__title'>先放下内耗，<Text>从一小步开始。</Text></Text><Text className='desktop-intro__body'>不急着变好。说说现在的你，收容员陪你把下一步做小。</Text></View>}
       {activeSession && (
         <Button className='active-agent-card glass-card' onClick={() => Taro.navigateTo({ url: '/pages/agent/index' })}>
           <View><Text className='active-agent-card__tag'>ONGOING · 行动还在</Text><Text className='active-agent-card__title'>{activeSession.task?.title || '继续刚才的收容对话'}</Text></View>
@@ -141,6 +156,7 @@ export default function IndexPage() {
           </View>
           <View className='capture-input'>
             <Textarea
+              ariaLabel='此刻的心情'
               maxlength={200}
               value={inputText}
               placeholder='写下此刻的心情，越具体越能被理解哦…'
@@ -170,14 +186,16 @@ export default function IndexPage() {
           <View className='privacy-note'><Text>♢</Text><Text>对话只按你的授权保存在本机</Text><Text>♙</Text></View>
         </View>
       )}
+      </View>
+      </View>
 
       <View className='hot-section glass-card'>
         <View className='section-title'>
-          <Text>🔥 今日热门怪兽</Text><Text className='hot-section__refresh'>换一批 ⟳</Text>
+          <Text>{isWebPreview ? '✦ 认识几位心情小住客' : '🔥 今日热门怪兽'}</Text><Text className='hot-section__refresh'>{isWebPreview ? '每一种心情，都有它的位置' : '换一批 ⟳'}</Text>
         </View>
         <View className='hot-grid'>
           {featuredMonsters.map((monster, index) => (
-            <MonsterMiniCard key={monster.id} monster={monster} metric={['12.3k', '9.8k', '8.6k', '7.2k'][index]} />
+            <MonsterMiniCard key={monster.id} monster={monster} metric={isWebPreview ? undefined : ['12.3k', '9.8k', '8.6k', '7.2k'][index]} />
           ))}
         </View>
       </View>

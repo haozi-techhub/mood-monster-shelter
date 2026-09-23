@@ -6,7 +6,10 @@ import shelterGuide from '../../assets/monsters/shelter-guide.png'
 import { Decorations } from '../../components/Decorations'
 import { analyzeMood } from '../../services/monsterApi'
 import { saveLatestAnalysis } from '../../services/storage'
+import { useDesktop } from '../../utils/useDesktop'
 import './index.less'
+
+const DesktopLoading: typeof import('../../desktop/Archive').DesktopLoading | null = process.env.TARO_ENV === 'h5' ? require('../../desktop/Archive').DesktopLoading : null
 
 const stages = [
   ['发现一只可疑小怪兽…', '它正在伪装成一句很合理的话…'],
@@ -15,6 +18,7 @@ const stages = [
 ]
 
 export default function LoadingPage() {
+  const desktop = useDesktop()
   const router = useRouter()
   const [stageIndex, setStageIndex] = useState(0)
   const inputText = useMemo(() => {
@@ -44,6 +48,8 @@ export default function LoadingPage() {
       clearInterval(ticker)
     }
   }, [inputText])
+
+  if (desktop && DesktopLoading) return <DesktopLoading status={stages[stageIndex][0]} description={stages[stageIndex][1]} />
 
   return (
     <View className='page loading-page'>

@@ -2,12 +2,13 @@ import Taro from '@tarojs/taro'
 
 import { buildFallbackAgentResponse, isValidAgentResponse } from './agentEngine'
 import { isHighRiskInput } from '../utils/safety'
+import { isCloudEnabled } from '../utils/runtime'
 import type { AgentTurnRequest, AgentTurnResponse } from '../types/agent'
 
 export const runAgentTurn = async (request: AgentTurnRequest): Promise<AgentTurnResponse> => {
   if (isHighRiskInput(request.userMessage)) return buildFallbackAgentResponse(request)
 
-  if (process.env.TARO_APP_USE_CLOUD === 'true') {
+  if (isCloudEnabled) {
     const cloud = (Taro as typeof Taro & {
       cloud?: { callFunction: (options: { name: string; data: unknown }) => Promise<{ result: unknown }> }
     }).cloud

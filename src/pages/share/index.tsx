@@ -8,7 +8,11 @@ import { findMonsterBySlug } from '../../data/monsters'
 import { getShareDraft } from '../../services/agentStorage'
 import { buildSharePosterContent, type ShareTemplate } from '../../services/sharePoster'
 import { getLatestAnalysis } from '../../services/storage'
+import { isWebPreview } from '../../utils/runtime'
 import './index.less'
+import { useDesktop } from '../../utils/useDesktop'
+
+const DesktopShare: typeof import('../../desktop/Share').DesktopShare | null = process.env.TARO_ENV === 'h5' ? require('../../desktop/Share').DesktopShare : null
 
 type PosterCanvasContext = ReturnType<typeof Taro.createCanvasContext>
 
@@ -47,6 +51,7 @@ const wrapCanvasText = (ctx: PosterCanvasContext, text: string, maxWidth: number
 }
 
 export default function SharePage() {
+  const desktop = useDesktop()
   const router = useRouter()
   const sessionId = router.params.sessionId
   const initialTemplate = (['daily', 'death', 'discharge'].includes(router.params.template || '') ? router.params.template : 'daily') as ShareTemplate
@@ -143,7 +148,7 @@ export default function SharePage() {
     try {
       const file = await renderCanvas()
       await Taro.saveImageToPhotosAlbum({ filePath: file.tempFilePath })
-      Taro.showToast({ title: '图片已保存', icon: 'success' })
+      Taro.showToast({ title: isWebPreview ? '已发起图片下载' : '图片已保存', icon: 'success' })
     } catch {
       try {
         const file = await renderCanvas()
@@ -155,6 +160,8 @@ export default function SharePage() {
       Taro.hideLoading()
     }
   }
+
+  if (desktop && DesktopShare) return <DesktopShare content={content} template={template} onTemplate={setTemplate} currentContent={getCurrentContent} />
 
   return (
     <View className='page share-page'>
@@ -197,7 +204,9 @@ export default function SharePage() {
 
       <View className='share-actions'>
         <Button className='primary-button' onClick={savePoster}>保存图片</Button>
-        <Button className='secondary-button' openType='share'>分享给朋友</Button>
+        {isWebPreview
+          ? <Button className='secondary-button' onClick={() => Taro.showModal({ title: '把小怪兽带给朋友', content: '先保存图片，再把图片发给朋友。当前是本机预览，网页链接暂时不能供其他设备直接使用。', showCancel: false })}>如何分享</Button>
+          : <Button className='secondary-button' openType='share'>分享给朋友</Button>}
       </View>
 
       <Canvas className='poster-canvas' canvasId='sharePoster' />

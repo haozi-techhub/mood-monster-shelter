@@ -35,6 +35,7 @@
     "@babel/core": "^7.28.0",
     "@babel/preset-react": "^7.29.7",
     "@babel/preset-typescript": "^7.29.7",
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.6.2",
     "@tarojs/cli": "4.2.0",
     "@tarojs/webpack5-runner": "4.2.0",
     "@types/node": "^24.0.0",
@@ -42,6 +43,7 @@
     "@types/react-dom": "^18.3.0",
     "babel-preset-taro": "4.2.0",
     "less": "^4.4.0",
+    "react-refresh": "^0.14.2",
     "typescript": "^5.9.0"
   }
 }

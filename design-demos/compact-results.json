@@ -1,0 +1,86 @@
+[
+  {
+    "file": "a-orbit.html",
+    "size": [
+      1024,
+      768
+    ],
+    "outside": [],
+    "navOutside": false,
+    "navBrandOverlap": false,
+    "modal": {
+      "withinViewport": true,
+      "noScroll": true
+    }
+  },
+  {
+    "file": "a-orbit.html",
+    "size": [
+      1280,
+      720
+    ],
+    "outside": [],
+    "navOutside": false,
+    "navBrandOverlap": false,
+    "modal": {
+      "withinViewport": true,
+      "noScroll": true
+    }
+  },
+  {
+    "file": "b-studio.html",
+    "size": [
+      1024,
+      768
+    ],
+    "outside": [],
+    "navOutside": false,
+    "navBrandOverlap": false,
+    "modal": {
+      "withinViewport": true,
+      "noScroll": true
+    }
+  },
+  {
+    "file": "b-studio.html",
+    "size": [
+      1280,
+      720
+    ],
+    "outside": [],
+    "navOutside": false,
+    "navBrandOverlap": false,
+    "modal": {
+      "withinViewport": true,
+      "noScroll": true
+    }
+  },
+  {
+    "file": "c-quiet.html",
+    "size": [
+      1024,
+      768
+    ],
+    "outside": [],
+    "navOutside": false,
+    "navBrandOverlap": false,
+    "modal": {
+      "withinViewport": true,
+      "noScroll": true
+    }
+  },
+  {
+    "file": "c-quiet.html",
+    "size": [
+      1280,
+      720
+    ],
+    "outside": [],
+    "navOutside": false,
+    "navBrandOverlap": false,
+    "modal": {
+      "withinViewport": true,
+      "noScroll": true
+    }
+  }
+]

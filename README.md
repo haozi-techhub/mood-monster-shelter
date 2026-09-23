@@ -4,6 +4,12 @@
 
 当前产品与技术基线见 [`doc/mood-monster-agent-v0.4-plan.md`](doc/mood-monster-agent-v0.4-plan.md)，页面视觉与适配基线见 [`doc/mood-monster-visual-design-guidelines-v0.1.md`](doc/mood-monster-visual-design-guidelines-v0.1.md)。
 
+## 当前新增目标与开发流程
+
+2026-08-26 起按 [SDD 流程](specs/README.md) 开发。当前新增目标是 [Web 朋友内测版](specs/001-web-friends-beta/spec.md)：复用 Taro H5，接通受保护的真实模型调用，并交付可访问的链接。
+
+**当前阶段：[电脑端核心流程预览](specs/002-desktop-preview/spec.md) 的 B「陪伴工作室」方向已完成本地实现与验收。** 此阶段只使用本地规则，真实 API 与朋友在线部署留待后续；001 仍是后续草案。下方的已完成内容是既有 V0.4 基线，不能据此认为朋友已能使用在线 AI 版本。
+
 ## 当前完成内容
 
 - 首页输入、快捷情绪、热门怪兽与自定义底部导航
@@ -27,7 +33,7 @@
 
 - Taro 4.2 + React 18 + TypeScript
 - Less 自定义视觉系统
-- 微信小程序优先，保留 H5 构建
+- 微信小程序与 H5 共用代码；当前新增 Web 朋友内测交付，具体状态见上方 SDD 规格
 - CloudBase Cloud Functions
 - Taro Storage / 微信 Storage
 - 小程序 Canvas 分享卡
@@ -48,6 +54,8 @@ H5 预览：
 ```bash
 npm run dev:h5
 ```
+
+开发服务器固定监听 `127.0.0.1:10086`；这是本机预览地址，不是朋友可访问的公网链接。宽度达到 1024 CSS px 时显示 B 方案桌面界面，较窄视口沿用原手机界面。
 
 ## 构建
 

@@ -16,8 +16,12 @@ import {
 import { clearAgentEvents, trackAgentEvent } from '../../services/analytics'
 import { clearMonsterData } from '../../services/storage'
 import './index.less'
+import { useDesktop } from '../../utils/useDesktop'
+
+const DesktopProfile: typeof import('../../desktop/Profile').DesktopProfile | null = process.env.TARO_ENV === 'h5' ? require('../../desktop/Profile').DesktopProfile : null
 
 export default function ProfilePage() {
+  const desktop = useDesktop()
   const [refreshKey, setRefreshKey] = useState(0)
   const consent = useMemo(() => getAgentConsent(), [refreshKey])
   const stats = useMemo(() => getAgentStats(), [refreshKey])
@@ -31,9 +35,7 @@ export default function ProfilePage() {
     Taro.showToast({ title: '收容员会按约定记住结构化线索', icon: 'none' })
   }
 
-  const disableMemory = async () => {
-    const result = await Taro.showModal({ title: '关闭本地记忆？', content: '完整对话、行动记录、怪兽图鉴、长期摘要和本地指标会一起清除。' })
-    if (!result.confirm) return
+  const applyDisable = () => {
     setAgentConsent(false)
     clearAgentData(true)
     clearMonsterData()
@@ -41,15 +43,23 @@ export default function ProfilePage() {
     setRefreshKey((key) => key + 1)
   }
 
-  const clearAll = async () => {
-    const result = await Taro.showModal({ title: '清空收容记录？', content: '这会删除本机上的完整对话、结构化摘要、怪兽图鉴和本地指标，无法撤销。' })
-    if (!result.confirm) return
+  const applyClear = () => {
     clearAgentData(true)
     clearMonsterData()
     clearAgentEvents()
     setRefreshKey((key) => key + 1)
     Taro.showToast({ title: '本地收容记录已清空', icon: 'none' })
   }
+
+  const disableMemory = async () => {
+    const result = await Taro.showModal({ title: '关闭本地记忆？', content: '完整对话、行动记录、怪兽图鉴、长期摘要和本地指标会一起清除。' })
+    if (result.confirm) applyDisable()
+  }
+  const clearAll = async () => {
+    const result = await Taro.showModal({ title: '清空收容记录？', content: '这会删除本机上的完整对话、结构化摘要、怪兽图鉴和本地指标，无法撤销。' })
+    if (result.confirm) applyClear()
+  }
+  if (desktop && DesktopProfile) return <DesktopProfile consent={consent} stats={stats} onEnable={enableMemory} onDisable={applyDisable} onClear={applyClear} />
 
   return (
     <TabPageLayout active='profile' className='profile-page'>

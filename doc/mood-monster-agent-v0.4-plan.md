@@ -1,7 +1,7 @@
 ---
 status: Active
 version: V0.4
-updated: 2026-07-17
+updated: 2026-08-26
 current_milestone: 9. 行动闭环完善完成，进入云环境与真机持续验证
 owner: Mood Monster Shelter
 ---
@@ -9,6 +9,18 @@ owner: Mood Monster Shelter
 # 心情怪兽收容所 Agent V0.4 落盘与开发计划
 
 > 本文档是 Agent V0.4 的执行基线。涉及 Agent 产品、交互、数据、记忆、云函数和验收标准的变更必须同步更新本文档。若与 `AGENTS.md` 冲突，以 `AGENTS.md` 的技术栈、安全边界和固定 16 只怪兽约束为准。
+
+## 2026-08-26 新增交付目标：Web 朋友内测版
+
+**最新阶段确认：** 用户已确认先做「可操作、与小程序风格一致的电脑端核心流程预览」。按 [002 规格](../specs/002-desktop-preview/spec.md) 实施，本阶段复用本地规则与既有状态机，不接真实模型、不上线。下方 001 规格保留为后续交付，不再以其“手机优先”假设约束本轮。
+
+**桌面方向确认：** 用户选择 B「陪伴工作室」。H5 宽屏新增顶部导航与分区展示，行动状态、存储授权、两次降阶和安全阻断继续复用本文件。长对话/历史通过分页和详情切换保持单屏，手机底栏不变。正式实现已完成本地浏览器与双端构建验收；HTML 初稿不算 Agent 实现证据，正式证据见 `specs/002-desktop-preview/acceptance.md`。
+
+- 用户已确认希望朋友可通过 Web 使用、会配置模型 API Key，并要求全程 SDD。
+- 在 V0.4 上新增 Web 交付增量，沿用 Taro H5 与 CloudBase，不重做既有行动闭环。
+- [规格草案](../specs/001-web-friends-beta/spec.md)、[技术计划](../specs/001-web-friends-beta/plan.md)、[任务](../specs/001-web-friends-beta/tasks.md)、[验收](../specs/001-web-friends-beta/acceptance.md) 已建立，具体范围待评审。
+- 这次文档补充不表示 Web 云端调用、内测访问控制、真实模型联调或浏览器验收已完成；下方已完成清单是原 V0.4 历史记录。
+- 新增重点：浏览器云调用适配、真实/兜底来源区分、云端处理告知、服务端访问与成本限制、浏览器体验与真实设备验证。密钥只在服务端配置。
 
 ## 执行状态
 

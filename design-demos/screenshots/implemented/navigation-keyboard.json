@@ -1,0 +1,9 @@
+{
+  "roomAsset": "http://127.0.0.1:10089/static/images/assets/scenes/shelter-room-v1.webp",
+  "scripts": [
+    "http://127.0.0.1:10089/chunk/930.js"
+  ],
+  "focusAfterArrow": "记录",
+  "urlAfterEnter": "http://127.0.0.1:10089/#/pages/gallery/index",
+  "current": "记录"
+}

@@ -10,6 +10,9 @@ import { findMonsterBySlug } from '../../data/monsters'
 import { getMemorySummaries, getWeeklyAgentStats } from '../../services/agentStorage'
 import type { MemorySummary, WeeklyAgentStats } from '../../types/agent'
 import './index.less'
+import { useDesktop } from '../../utils/useDesktop'
+
+const DesktopDiscover: typeof import('../../desktop/Discover').DesktopDiscover | null = process.env.TARO_ENV === 'h5' ? require('../../desktop/Discover').DesktopDiscover : null
 
 const formatDate = (timestamp: number) => {
   const date = new Date(timestamp)
@@ -19,6 +22,7 @@ const formatDate = (timestamp: number) => {
 const actionLabel = (seconds: number) => seconds <= 30 ? '30秒启动' : `${Math.ceil(seconds / 60)}分钟行动`
 
 export default function DiscoverPage() {
+  const desktop = useDesktop()
   const [summaries, setSummaries] = useState<MemorySummary[]>(() => getMemorySummaries())
   const [weeklyStats, setWeeklyStats] = useState<WeeklyAgentStats>(() => getWeeklyAgentStats())
   useDidShow(() => {
@@ -39,6 +43,8 @@ export default function DiscoverPage() {
   const openActionRecord = (sessionId: string) => {
     Taro.navigateTo({ url: `/pages/record-detail/index?sessionId=${encodeURIComponent(sessionId)}` })
   }
+
+  if (desktop && DesktopDiscover) return <DesktopDiscover summaries={summaries} weekly={weeklyStats} onOpenAction={openActionRecord} />
 
   return (
     <TabPageLayout active='discover' className='discover-page'>

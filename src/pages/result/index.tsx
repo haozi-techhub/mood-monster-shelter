@@ -5,9 +5,13 @@ import { useEffect, useState } from 'react'
 import { Decorations } from '../../components/Decorations'
 import { PageHeader } from '../../components/PageHeader'
 import { addToGallery, consumeLatestAnalysis, type AnalysisResult } from '../../services/storage'
+import { useDesktop } from '../../utils/useDesktop'
 import './index.less'
 
+const DesktopArchive: typeof import('../../desktop/Archive').DesktopArchive | null = process.env.TARO_ENV === 'h5' ? require('../../desktop/Archive').DesktopArchive : null
+
 export default function ResultPage() {
+  const desktop = useDesktop()
   const router = useRouter()
   const readOnly = router.params.source === 'gallery'
   const [result] = useState<AnalysisResult>(() => consumeLatestAnalysis())
@@ -31,6 +35,8 @@ export default function ResultPage() {
     setAdded(true)
     Taro.showToast({ title: completed ? '驯化任务完成，怪兽稳定了' : '已存入怪兽图鉴', icon: 'none' })
   }
+
+  if (desktop && DesktopArchive) return <DesktopArchive result={result} />
 
   if (result.safety) {
     return (
